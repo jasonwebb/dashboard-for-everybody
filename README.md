@@ -2,6 +2,7 @@
 ## Dashboard
 
 1. Web app that displays sensor data graphs and allows users to set up trigger events
+   1. Look into using [Chart.js](https://www.chartjs.org) or [ApexCharts.js](https://apexcharts.com/)
 2. Subscribes to sensor data streams over MQTT transmitted by the sensor platform
 3. Publishes motor control messages over MQTT based on trigger events driven by sensor data
 
