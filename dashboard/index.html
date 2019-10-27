@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Dashboard for Everybody</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="lib/bulma.min.css">
+  <link rel="stylesheet" href="dist/styles.min.css">
+</head>
+
+<body>
+  <h1 class="visually-hidden">A Dashboard for Everybody</h1>
+
+  <main>
+    <div class="container">
+      <div class="columns">
+        <div class="column">
+          <div class="panel" id="device-selector">
+            <div class="field">
+              <label for="selected-sensor" class="label">Select sensor to watch:</label>
+
+              <div class="control">
+                <div class="select">
+                  <select id="selected-sensor">
+                    <option value="distance">Distance</option>
+                    <option value="distance">Temperature</option>
+                    <option value="distance">Ambient light</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="panel device-status-panel" id="input-device-status" aria-live="polite">
+            <div class="connected status">Input device connected</div>
+            <div class="not-connected status is-visible">Input device not connected</div>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="panel device-status-panel" id="output-device-status" aria-live="polite">
+            <div class="connected status">Output device connected</div>
+            <div class="not-connected status is-visible">Output device not connected</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="columns">
+        <!-- <div class="column is-two-thirds"> -->
+        <div class="column">
+          <div class="panel" id="live-chart-container">
+            <h2>Live sensor data</h2>
+
+            <canvas id="live-chart" width="400" height="100"></canvas>
+
+            <span class="visually-hidden is-hidden">No sensor data available</span>
+
+            <table id="live-chart-data" class="visually-hidden">
+              <caption>Most recent sensor data</caption>
+
+              <thead>
+                <tr>
+                  <th scope="col">Value</th>
+                  <th scope="col">Timestamp</th>
+                </tr>
+              </thead>
+
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- <div class="column">
+          <div class="panel"></div>
+        </div> -->
+      </div>
+
+      <div class="columns trigger-panels">
+        <div class="column">
+          <div class="panel" id="add-trigger-panel">
+            <h2>Create a new trigger</h2>
+
+            <form>
+              <div class="field is-grouped">
+                <fieldset>
+                  <legend class="label">When data goes <span aria-hidden="true">...</span></legend>
+
+                  <div class="control">
+                    <label>
+                      <input type="radio" name="above-below" value="above">
+                      Above
+                    </label>
+                  </div>
+                  
+                  <div class="control">
+                    <label>
+                      <input type="radio" name="above-below" value="below">
+                      Below
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
+
+              <div class="field">
+                <label for="threshold-value" class="label">This value:</label>
+
+                <div class="control">
+                  <input type="number" id="threshold-value" name="threshold-value" class="input">
+                </div>
+              </div>
+
+              <button type="submit" class="button is-info">Add trigger</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="panel-placeholder">
+            No trigger defined
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="panel-placeholder">
+            No trigger defined
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="panel-placeholder">
+            No trigger defined
+          </div>
+        </div>
+
+        <!-- <div class="column">
+          <div class="panel-placeholder">
+            No trigger defined
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </main>
+
+  <script src="dist/scripts.min.js"></script>
+</body>
+</html>
