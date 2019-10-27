@@ -1,0 +1,97 @@
+.visually-hidden {
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  /* 1 */
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  /* 2 */
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  white-space: nowrap !important; }
+
+* {
+  box-sizing: border-box; }
+
+body {
+  padding: 50px 0;
+  min-height: 100vh;
+  background-color: #efefef; }
+
+h2 {
+  font-weight: bold;
+  font-size: 18px;
+  margin: 0 0 10px 0; }
+
+.columns .column {
+  padding: .5em; }
+
+.button.is-info:focus {
+  outline: 0;
+  box-shadow: 0 0 0 2px white, 0 0 0 5px #209cee !important; }
+
+.panel {
+  background-color: white;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  padding: 20px;
+  height: 100%; }
+
+#device-selector:focus-within {
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.3); }
+
+#device-selector .field {
+  display: flex;
+  align-items: center; }
+  #device-selector .field .label {
+    display: inline-block; }
+  #device-selector .field .control {
+    display: inline-block;
+    margin-left: 20px; }
+
+.device-status-panel {
+  padding: 5px; }
+  .device-status-panel .status {
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    font-weight: bold;
+    display: none; }
+    .device-status-panel .status.is-visible {
+      display: flex; }
+  .device-status-panel .connected {
+    background-color: #23d160;
+    color: white; }
+  .device-status-panel .not-connected {
+    background-color: #ff3860;
+    color: white; }
+
+.trigger-panels .panel,
+.trigger-panels .panel-placeholder {
+  height: 300px !important; }
+
+.trigger-panels .panel#add-trigger-panel:focus-within {
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.3); }
+
+.trigger-panels .panel#add-trigger-panel .label:focus-within {
+  font-weight: bold;
+  color: #209cee; }
+
+.trigger-panels .panel#add-trigger-panel .button {
+  margin-top: 20px; }
+
+.panel-placeholder {
+  background-color: rgba(0, 0, 0, 0.05);
+  border: 5px dashed rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.3);
+  font-weight: bold; }
