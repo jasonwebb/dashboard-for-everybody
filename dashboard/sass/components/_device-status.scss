@@ -1,0 +1,27 @@
+.device-status-panel {
+  padding: 5px;
+
+  .status {
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    font-weight: bold;
+    display: none;
+
+    &.is-visible {
+      display: flex;
+    }
+  }
+
+  .connected {
+    background-color: hsl(141, 71%, 48%);
+    color: white;
+  }
+  
+  .not-connected {
+    background-color: hsl(348, 100%, 61%);
+    color: white;
+  }
+}

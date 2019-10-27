@@ -1,0 +1,19 @@
+#device-selector {
+  &:focus-within {
+    box-shadow: 0 0 0 3px rgba(0,0,0,.3);
+  }
+
+  .field {
+    display: flex;
+    align-items: center;
+    
+    .label {
+      display: inline-block;
+    }
+
+    .control {
+      display: inline-block;
+      margin-left: 20px;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+.panel-placeholder {
+  background-color: rgba(0,0,0,.05);
+  border: 5px dashed rgba(0,0,0,.1);
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 18px;
+  color: rgba(0,0,0,.3);
+  font-weight: bold;
+}
