@@ -49,36 +49,34 @@
           </div>
         </div>
       </div>
-      
+
       <div class="columns">
-        <!-- <div class="column is-two-thirds"> -->
-        <div class="column">
+        <div class="column is-two-thirds">
           <div class="panel" id="live-chart-container">
             <h2>Live sensor data</h2>
 
-            <canvas id="live-chart" width="400" height="100"></canvas>
+            <canvas id="live-chart" height="100px" aria-hidden="true"></canvas>
 
-            <span class="visually-hidden is-hidden">No sensor data available</span>
+            <span class="visually-hidden">No sensor data available</span>
 
             <table id="live-chart-data" class="visually-hidden">
-              <caption>Most recent sensor data</caption>
+              <caption>Last 50 sensor readings, sorted newest to oldest</caption>
 
               <thead>
                 <tr>
-                  <th scope="col">Value</th>
+                  <th scope="col">Sensor value</th>
                   <th scope="col">Timestamp</th>
                 </tr>
               </thead>
 
-              <tbody>
-              </tbody>
+              <tbody></tbody>
             </table>
           </div>
         </div>
 
-        <!-- <div class="column">
+        <div class="column">
           <div class="panel"></div>
-        </div> -->
+        </div>
       </div>
 
       <div class="columns trigger-panels">
@@ -97,7 +95,7 @@
                       Above
                     </label>
                   </div>
-                  
+
                   <div class="control">
                     <label>
                       <input type="radio" name="above-below" value="below">
