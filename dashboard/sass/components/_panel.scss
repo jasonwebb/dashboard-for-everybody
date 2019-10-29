@@ -6,4 +6,12 @@
 
   padding: 20px;
   height: 100%;
+
+  @media (max-width: 768px) {
+    padding: 15px;
+  }
+}
+
+.panel-placeholder {
+  height: 100%;
 }

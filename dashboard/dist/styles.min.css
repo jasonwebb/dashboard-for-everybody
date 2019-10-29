@@ -30,12 +30,29 @@ h2 {
   font-size: 18px;
   margin: 0 0 10px 0; }
 
+@media (max-width: 768px) {
+  .columns {
+    margin: 0; }
+    .columns:not(:last-child) {
+      margin-bottom: 0; }
+    .columns:last-child {
+      margin-bottom: 0; } }
+
 .columns .column {
   padding: .5em; }
+  @media (max-width: 768px) {
+    .columns .column {
+      padding: .25em .5em; } }
+
+.button:focus {
+  text-decoration: underline;
+  outline: 0; }
 
 .button.is-info:focus {
-  outline: 0;
   box-shadow: 0 0 0 2px white, 0 0 0 5px #209cee !important; }
+
+.button.is-danger:focus {
+  box-shadow: 0 0 0 2px white, 0 0 0 5px #ff3860 !important; }
 
 .panel {
   background-color: white;
@@ -44,9 +61,15 @@ h2 {
   border-radius: 5px;
   padding: 20px;
   height: 100%; }
+  @media (max-width: 768px) {
+    .panel {
+      padding: 15px; } }
+
+.panel-placeholder {
+  height: 100%; }
 
 #device-selector:focus-within {
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.3); }
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5), 0 0 20px 0 rgba(0, 0, 0, 0.15); }
 
 #device-selector .field {
   display: flex;
@@ -56,6 +79,9 @@ h2 {
   #device-selector .field .control {
     display: inline-block;
     margin-left: 20px; }
+    #device-selector .field .control select:focus {
+      box-shadow: 0 0 0 2px #209cee;
+      outline: none; }
 
 .device-status-panel {
   padding: 5px; }
@@ -67,29 +93,111 @@ h2 {
     width: 100%;
     height: 100%;
     font-size: 20px;
-    font-weight: bold; }
+    font-weight: bold;
+    text-shadow: 2px 2px rgba(0, 0, 0, 0.4); }
     .device-status-panel .status.is-visible {
       display: flex; }
   .device-status-panel .connected {
-    background-color: #23d160;
+    background-color: #017c2c;
     color: white; }
   .device-status-panel .not-connected {
     background-color: #ff3860;
     color: white; }
 
-.trigger-panels .panel,
-.trigger-panels .panel-placeholder {
-  height: 100%; }
+#add-trigger-panel:focus-within {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5), 0 0 20px 0 rgba(0, 0, 0, 0.15); }
 
-.trigger-panels .panel#add-trigger-panel:focus-within {
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.3); }
+#add-trigger-panel .form-group {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 10px 20px 15px 20px;
+  margin-bottom: 10px; }
 
-.trigger-panels .panel#add-trigger-panel .label:focus-within {
+#add-trigger-panel .label:focus-within {
   font-weight: bold;
   color: #209cee; }
 
-.trigger-panels .panel#add-trigger-panel .button {
+#add-trigger-panel input[type="number"] {
+  width: 100px; }
+  #add-trigger-panel input[type="number"]:focus {
+    box-shadow: 0 0 0 2px #209cee; }
+
+#add-trigger-panel label:focus-within {
+  font-weight: bold;
+  color: #209cee; }
+  #add-trigger-panel label:focus-within input {
+    margin-right: 3px; }
+
+#add-trigger-panel input[type="radio"]:before {
+  content: '';
+  width: calc(100% - 1px);
+  height: calc(100% - 1px);
+  display: block;
+  border-radius: 5px;
+  transition: box-shadow .1s linear; }
+
+#add-trigger-panel input[type="radio"]:focus {
+  outline: none; }
+  #add-trigger-panel input[type="radio"]:focus:before {
+    box-shadow: 0 0 0 3px #209cee; }
+
+#add-trigger-panel .button {
   margin-top: 10px; }
+
+.trigger {
+  position: relative;
+  padding-top: 65px;
+  padding-bottom: 90px;
+  border: 0; }
+  .trigger.is-blue {
+    box-shadow: inset 0 0 0 4px royalblue; }
+  .trigger h2 {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    right: 1px;
+    padding: 10px 10px 10px 15px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: white;
+    background-color: royalblue; }
+    .trigger h2 .remove-button {
+      background: none;
+      border: 0;
+      padding: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      padding: 0 10px;
+      cursor: pointer; }
+      .trigger h2 .remove-button .icon {
+        font-size: 24px;
+        color: white; }
+      .trigger h2 .remove-button:focus, .trigger h2 .remove-button:hover {
+        outline: none; }
+        .trigger h2 .remove-button:focus .icon, .trigger h2 .remove-button:hover .icon {
+          background-color: white;
+          border-radius: 15px;
+          color: royalblue;
+          font-size: 18px;
+          padding-top: 4px; }
+  .trigger .name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 200px;
+    margin-bottom: 20px;
+    background-color: rgba(0, 0, 0, 0.1); }
+  .trigger .action {
+    font-size: 18px; }
+    .trigger .action .is-highlighted {
+      font-weight: bold;
+      text-decoration: underline; }
+  .trigger .button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px; }
 
 .panel-placeholder {
   background-color: rgba(0, 0, 0, 0.05);

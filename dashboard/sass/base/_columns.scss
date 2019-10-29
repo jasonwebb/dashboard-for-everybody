@@ -1,5 +1,21 @@
 .columns {
+  @media (max-width: 768px) {
+    margin: 0;
+
+    &:not(:last-child) {
+      margin-bottom: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
   .column {
     padding: .5em;
+
+    @media (max-width: 768px) {
+      padding: .25em .5em;
+    }
   }
 }

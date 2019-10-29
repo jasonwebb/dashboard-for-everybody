@@ -1,0 +1,60 @@
+#add-trigger-panel {
+  &:focus-within {
+    box-shadow: 0 0 0 1px rgba(0,0,0,.5), 0 0 20px 0 rgba(0,0,0,.15);
+  }
+
+  .form-group {
+    background-color: rgba(0,0,0,.05);
+    padding: 10px 20px 15px 20px;
+    margin-bottom: 10px;
+  }
+
+  .label {
+    &:focus-within {
+      font-weight: bold;
+      color: hsl(204, 86%, 53%);
+    }
+  }
+
+  input[type="number"] {
+    width: 100px;
+
+    &:focus {
+      box-shadow: 0 0 0 2px hsl(204, 86%, 53%);
+    }
+  }
+
+  label {
+    &:focus-within { 
+      font-weight: bold;
+      color: hsl(204, 86%, 53%);
+
+      input {
+        margin-right: 3px;
+      }
+    }
+  }
+
+  input[type="radio"] {
+    &:before {
+      content: '';
+      width: calc(100% - 1px);
+      height: calc(100% - 1px);
+      display: block;
+      border-radius: 5px;
+      transition: box-shadow .1s linear;
+    }
+    
+    &:focus {
+      outline: none;
+
+      &:before {
+        box-shadow: 0 0 0 3px hsl(204, 86%, 53%);
+      }
+    }
+  }
+
+  .button {
+    margin-top: 10px;
+  }
+}

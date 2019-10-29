@@ -1,8 +1,18 @@
 .button {
+  &:focus {
+    text-decoration: underline;
+    outline: 0;
+  }
+
   &.is-info {
     &:focus {
-      outline: 0;
       box-shadow: 0 0 0 2px white, 0 0 0 5px hsl(204, 86%, 53%) !important;
+    }
+  }
+
+  &.is-danger {
+    &:focus {
+      box-shadow: 0 0 0 2px white, 0 0 0 5px hsl(348, 100%, 61%) !important;
     }
   }
 }
