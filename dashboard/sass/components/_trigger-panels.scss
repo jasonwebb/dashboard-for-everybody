@@ -1,7 +1,7 @@
 .trigger-panels {
   .panel,
   .panel-placeholder {
-    height: 300px !important;
+    height: 100%;
   }
 
   .panel {
@@ -19,7 +19,7 @@
       }
 
       .button {
-        margin-top: 20px;
+        margin-top: 10px;
       }
     }
   }
