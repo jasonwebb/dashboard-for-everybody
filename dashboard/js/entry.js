@@ -92,6 +92,21 @@ let optionsObject = {
   }
 };
 
+// Triggers
+let triggers = {
+  distance: [],
+  temperature: [],
+  light: []
+};
+
+/**
+  trigger: {
+    threshold: int,
+    aboveOrBelow: String ('above', 'below')
+    action: String ('pulse', 'on', 'off', 'interval')
+  }
+*/
+
 
 //================================================
 //  Wait for page to finish loading before 
@@ -136,6 +151,8 @@ window.addEventListener('DOMContentLoaded', function(e) {
       mockDataEnabled = !mockDataEnabled;
     }
   });
+
+  displayTriggers();
 });
 
 
@@ -182,24 +199,6 @@ if(mockDataEnabled) {
     displayDeviceStatus();
   }, getRandomInt(1000,5000));
 }
-
-
-//=======================================
-//  Triggers
-//=======================================
-let triggers = {
-  distance: [],
-  temperature: [],
-  light: []
-};
-
-/**
-  trigger: {
-    threshold: int,
-    aboveOrBelow: String ('above', 'below')
-    action: String ('pulse', 'on', 'off', 'interval')
-  }
-*/
 
 
 //==========================
@@ -373,25 +372,115 @@ function displayDeviceStatus() {
 //===============
 //  Triggers
 //===============
-function addNewTrigger() {
+// Creates a new trigger for the current sensor when the "Add Trigger" button is clicked
+function addNewTrigger(e) {
   e.preventDefault();
 
-  if(triggers.length < 3) {
+  let currentTriggers;
+
+  switch(currentSensor) {
+    case 'distance':
+      currentTriggers = triggers.distance;
+      break;
+
+    case 'temperature':
+      currentTriggers = triggers.temperature;
+      break;
+
+    case 'light':
+      currentTriggers = triggers.light;
+      break;
+  }
+
+  if(currentTriggers.length < 3) {
+    let aboveOrBelowEl = document.querySelector('#add-trigger-panel input[name="above-below"]:checked');
+    let thresholdEl = document.querySelector('#add-trigger-panel input[name="threshold-value"]');
+    let motorActionEl = document.querySelector('#add-trigger-panel input[name="motor-action"]:checked');
+    
+    // For demo purposes, forget about form validation and just make sure the values aren't null
+    let aboveOrBelow = aboveOrBelowEl != undefined ? aboveOrBelowEl.value : 'above';
+    let thresholdValue = thresholdEl.value != '' ? parseInt(thresholdEl.value) : 500;
+    let motorAction = motorActionEl != undefined ? motorActionEl.value : 'pulse-once';
+
+    // Create a new trigger for this sensor from the form data
     let newTrigger = {
-      // aboveOrBelow: document.querySelector('#add-trigger-panel input[name="above-below"]').value,
-      // threshold: document.querySelector('#add-trigger-panel input[name="threshold-value"]').value,
+      aboveOrBelow: aboveOrBelow,
+      threshold: thresholdValue,
+      motorAction: motorAction
     };
 
-    // triggers.push(newTrigger);
+    currentTriggers.push(newTrigger);
     displayTriggers();
   }
 }
 
+function removeTrigger(trigger) {
+
+  displayTriggers();
+}
+
 // Display all triggers that have been set
 function displayTriggers() {
-  triggers.forEach(function(index, trigger) {
+  let currentTriggers;
 
+  switch(currentSensor) {
+    case 'distance':
+      currentTriggers = triggers.distance;
+      break;
+
+    case 'temperature':
+      currentTriggers = triggers.temperature;
+      break;
+
+    case 'light':
+      currentTriggers = triggers.light;
+      break;
+  }
+
+  let columns = document.querySelectorAll('.trigger-panels .column:not(:first-of-type)');
+
+  // Display all the current triggers for this sensor
+  currentTriggers.forEach(function(trigger, index) {
+    columns[index].innerHTML = `
+      <div class="panel trigger is-blue">
+        <h2>
+          ${currentSensor.charAt(0).toUpperCase() + currentSensor.slice(1)} Trigger #${index + 1}
+          <button class="remove-button">
+            <span class="icon fas fa-times" aria-hidden="true"></span>
+            <span class="visually-hidden">Remove trigger</span>
+          </button>
+        </h2>
+
+        <div class="name">
+          <span class="visually-hidden">The </span>
+          Motor
+        </div>
+
+        <div class="action">
+          Will 
+          <span class="is-highlighted">${trigger.motorAction}</span> 
+          when the 
+          <span class="is-highlighted">${currentSensor}</span> 
+          sensor goes 
+          <span class="is-highlighted">${trigger.aboveOrBelow}</span>
+          <span class="is-highlighted">${trigger.thresholdValue}</span>
+        </div>
+
+        <button class="button is-danger">Remove this trigger</button>
+      </div>
+    `;
   });
+
+  // Add placeholders for remaining panels if there aren't enough triggers
+  if(currentTriggers.length < 3) {
+    for(let i = 0; i < 3 - currentTriggers.length; i++) {
+      columns[currentTriggers.length + i].innerHTML = `
+        <div class="panel-placeholder">
+          No trigger defined
+        </div>
+      `;
+    }
+  }
 }
 
 
