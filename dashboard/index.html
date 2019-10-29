@@ -16,7 +16,9 @@
 
   <main>
     <div class="container">
+      <!-- First row -->
       <div class="columns">
+        <!-- Select a sensor to watch -->
         <div class="column">
           <div class="panel" id="device-selector">
             <div class="field">
@@ -26,8 +28,8 @@
                 <div class="select">
                   <select id="selected-sensor">
                     <option value="distance">Distance</option>
-                    <option value="distance">Temperature</option>
-                    <option value="distance">Ambient light</option>
+                    <option value="temperature">Temperature</option>
+                    <option value="light">Light</option>
                   </select>
                 </div>
               </div>
@@ -35,6 +37,7 @@
           </div>
         </div>
 
+        <!-- Input device status -->
         <div class="column">
           <div class="panel device-status-panel" id="input-device-status" aria-live="polite">
             <div class="connected status">Input device connected</div>
@@ -42,6 +45,7 @@
           </div>
         </div>
 
+        <!-- Output device status -->
         <div class="column">
           <div class="panel device-status-panel" id="output-device-status" aria-live="polite">
             <div class="connected status">Output device connected</div>
@@ -51,35 +55,49 @@
       </div>
 
       <div class="columns">
+        <!-- Live sensor data chart and hidden table -->
         <div class="column is-two-thirds">
-          <div class="panel" id="live-chart-container">
+          <div class="panel" id="live-data">
             <h2>Live sensor data</h2>
 
-            <canvas id="live-chart" height="100px" aria-hidden="true"></canvas>
+            <!-- Chart.js chart -->
+            <div id="live-chart-container">
+              <canvas id="live-chart" height="100px" aria-hidden="true"></canvas>
+            </div>
 
-            <span class="visually-hidden">No sensor data available</span>
+            <!-- Same data in table for screen reader users -->
+            <div id="sensor-data" class="visually-hidden">
+              <!-- <span >No sensor data available</span> -->
 
-            <table id="live-chart-data" class="visually-hidden">
-              <caption>Last 50 sensor readings, sorted newest to oldest</caption>
-
-              <thead>
-                <tr>
-                  <th scope="col">Sensor value</th>
-                  <th scope="col">Timestamp</th>
-                </tr>
-              </thead>
-
-              <tbody></tbody>
-            </table>
+              <table>
+                <caption>Last 50 sensor readings, sorted newest to oldest</caption>
+  
+                <thead>
+                  <tr>
+                    <th scope="col">Sensor value</th>
+                    <th scope="col">Timestamp</th>
+                  </tr>
+                </thead>
+  
+                <tbody></tbody>
+              </table>
+            </div>
           </div>
         </div>
 
         <div class="column">
-          <div class="panel"></div>
+          <div class="panel">
+            <ul>
+              <li>Number of events so far</li>
+              <li>Number of triggers set up</li>
+              <li>Input readings so far</li>
+            </ul>
+          </div>
         </div>
       </div>
 
       <div class="columns trigger-panels">
+        <!-- Trigger creation form -->
         <div class="column">
           <div class="panel" id="add-trigger-panel">
             <h2>Create a new trigger</h2>
@@ -113,11 +131,40 @@
                 </div>
               </div>
 
+              <div class="field is-grouped">
+                <fieldset>
+                  <legend class="label">Make the motor <span aria-hidden="true"></span></legend>
+
+                  <div class="control">
+                    <label>
+                      <input type="radio" name="motor-action" value="pulse-once">
+                      Pulse once
+                    </label>
+                  </div>
+                  
+                  <div class="control">
+                    <label>
+                      <input type="radio" name="motor-action" value="pulse-three-times">
+                      Pulse three times
+                    </label>
+                  </div>
+                  
+                  <div class="control">
+                    <label>
+                      <input type="radio" name="motor-action" value="stay-on">
+                      Turn on and stay on
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
+
               <button type="submit" class="button is-info">Add trigger</button>
             </form>
           </div>
         </div>
+        <!-- /end trigger creation form -->
 
+        <!-- Placeholders for empty triggers -->
         <div class="column">
           <div class="panel-placeholder">
             No trigger defined
@@ -135,13 +182,8 @@
             No trigger defined
           </div>
         </div>
-
-        <!-- <div class="column">
-          <div class="panel-placeholder">
-            No trigger defined
-          </div>
-        </div> -->
       </div>
+      <!-- /end placeholders for empty triggers -->
     </div>
   </main>
 
