@@ -1,16 +1,41 @@
 
+```
+TODO:
+- introduction
+- purpose and motivation
+- connection to IoT HackDay event
+```
+
 ## Dashboard
 
-1. Web app that displays sensor data graphs and allows users to set up trigger events
-   1. Look into using [Chart.js](https://www.chartjs.org) or [ApexCharts.js](https://apexcharts.com/)
-2. Subscribes to sensor data streams over MQTT transmitted by the sensor platform
-3. Publishes motor control messages over MQTT based on trigger events driven by sensor data
+```
+TODO: overview
+* accessibility feature #1
+* ...
+```
+
+### Setup
+
+1. Run `npm install` in `./dashboard` to get all packages
+2. Run `gulp` to kick off build process and live dev server
+
+### Packages and technologies used
+
+* Vanilla ES6 JavaScript for all UI logic and interactions (see `./dashboard/js`)
+* Sass for styling (see `./dashboard/sass`)
+* Chart.js for the live sensor data chart
+* MQTT.js for communications with IoT devices
+* Gulp for the build system
+
+---
 
 ## Sensor platform
 
 1. Uses [Adafruit Huzzah32 board](https://learn.adafruit.com/adafruit-huzzah32-esp32-feather)
 2. Reads sensor data using Arduino sketch in `sensor-buddy/`
 3. Transmits sensor data over MQTT publish messages
+
+---
 
 ## Motor platform
 
