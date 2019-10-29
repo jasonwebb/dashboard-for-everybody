@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" href="lib/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
   <link rel="stylesheet" href="dist/styles.min.css">
 </head>
 
@@ -103,59 +104,63 @@
             <h2>Create a new trigger</h2>
 
             <form>
-              <div class="field is-grouped">
-                <fieldset>
-                  <legend class="label">When data goes <span aria-hidden="true">...</span></legend>
+              <div class="form-group">
+                <div class="field is-grouped">
+                  <fieldset>
+                    <legend class="label">When data goes <span aria-hidden="true">...</span></legend>
+
+                    <div class="control">
+                      <label>
+                        <input type="radio" name="above-below" value="above">
+                        Above
+                      </label>
+                    </div>
+
+                    <div class="control">
+                      <label>
+                        <input type="radio" name="above-below" value="below">
+                        Below
+                      </label>
+                    </div>
+                  </fieldset>
+                </div>
+
+                <div class="field">
+                  <label for="threshold-value" class="label">This value:</label>
 
                   <div class="control">
-                    <label>
-                      <input type="radio" name="above-below" value="above">
-                      Above
-                    </label>
+                    <input type="number" id="threshold-value" name="threshold-value" class="input">
                   </div>
-
-                  <div class="control">
-                    <label>
-                      <input type="radio" name="above-below" value="below">
-                      Below
-                    </label>
-                  </div>
-                </fieldset>
-              </div>
-
-              <div class="field">
-                <label for="threshold-value" class="label">This value:</label>
-
-                <div class="control">
-                  <input type="number" id="threshold-value" name="threshold-value" class="input">
                 </div>
               </div>
 
-              <div class="field is-grouped">
-                <fieldset>
-                  <legend class="label">Make the motor <span aria-hidden="true"></span></legend>
+              <div class="form-group">
+                <div class="field is-grouped">
+                  <fieldset>
+                    <legend class="label">Make the motor <span aria-hidden="true"></span></legend>
 
-                  <div class="control">
-                    <label>
-                      <input type="radio" name="motor-action" value="pulse-once">
-                      Pulse once
-                    </label>
-                  </div>
-                  
-                  <div class="control">
-                    <label>
-                      <input type="radio" name="motor-action" value="pulse-three-times">
-                      Pulse three times
-                    </label>
-                  </div>
-                  
-                  <div class="control">
-                    <label>
-                      <input type="radio" name="motor-action" value="stay-on">
-                      Turn on and stay on
-                    </label>
-                  </div>
-                </fieldset>
+                    <div class="control">
+                      <label>
+                        <input type="radio" name="motor-action" value="pulse-once">
+                        Pulse once
+                      </label>
+                    </div>
+                    
+                    <div class="control">
+                      <label>
+                        <input type="radio" name="motor-action" value="pulse-three-times">
+                        Pulse three times
+                      </label>
+                    </div>
+                    
+                    <div class="control">
+                      <label>
+                        <input type="radio" name="motor-action" value="stay-on">
+                        Turn on and stay on
+                      </label>
+                    </div>
+                  </fieldset>
+                </div>
               </div>
 
               <button type="submit" class="button is-info">Add trigger</button>
@@ -164,26 +169,11 @@
         </div>
         <!-- /end trigger creation form -->
 
-        <!-- Placeholders for empty triggers -->
-        <div class="column">
-          <div class="panel-placeholder">
-            No trigger defined
-          </div>
-        </div>
-
-        <div class="column">
-          <div class="panel-placeholder">
-            No trigger defined
-          </div>
-        </div>
-
-        <div class="column">
-          <div class="panel-placeholder">
-            No trigger defined
-          </div>
-        </div>
+        <!-- Columns for triggers and placeholders -->
+        <div class="column"></div>
+        <div class="column"></div>
+        <div class="column"></div>
       </div>
-      <!-- /end placeholders for empty triggers -->
     </div>
   </main>
 
