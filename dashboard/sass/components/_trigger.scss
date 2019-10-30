@@ -21,36 +21,43 @@
 
     color: white;
     background-color: royalblue;
+  }
 
-    .remove-button {
-      background: none;
-      border: 0;
-      padding: 0;
+  .remove-icon-button {
+    background: none;
+    border: 0;
+    padding: 0;
 
-      position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      padding: 0 10px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 50px;
+    height: 47px;
 
-      cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    .icon {
+      font-size: 24px;
+      color: white;
+    }
+
+    &:focus,
+    &:hover {
+      outline: none;
 
       .icon {
-        font-size: 24px;
-        color: white;
-      }
+        background-color: white;
+        border-radius: 15px;
+        color: royalblue;
+        font-size: 18px;
 
-      &:focus,
-      &:hover {
-        outline: none;
-
-        .icon {
-          background-color: white;
-          border-radius: 15px;
-          color: royalblue;
-          font-size: 18px;
-          padding-top: 4px;
-        }
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
   }

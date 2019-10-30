@@ -160,27 +160,32 @@ h2 {
     border-top-right-radius: 5px;
     color: white;
     background-color: royalblue; }
-    .trigger h2 .remove-button {
-      background: none;
-      border: 0;
-      padding: 0;
-      position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      padding: 0 10px;
-      cursor: pointer; }
-      .trigger h2 .remove-button .icon {
-        font-size: 24px;
-        color: white; }
-      .trigger h2 .remove-button:focus, .trigger h2 .remove-button:hover {
-        outline: none; }
-        .trigger h2 .remove-button:focus .icon, .trigger h2 .remove-button:hover .icon {
-          background-color: white;
-          border-radius: 15px;
-          color: royalblue;
-          font-size: 18px;
-          padding-top: 4px; }
+  .trigger .remove-icon-button {
+    background: none;
+    border: 0;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 50px;
+    height: 47px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer; }
+    .trigger .remove-icon-button .icon {
+      font-size: 24px;
+      color: white; }
+    .trigger .remove-icon-button:focus, .trigger .remove-icon-button:hover {
+      outline: none; }
+      .trigger .remove-icon-button:focus .icon, .trigger .remove-icon-button:hover .icon {
+        background-color: white;
+        border-radius: 15px;
+        color: royalblue;
+        font-size: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center; }
   .trigger .name {
     display: flex;
     justify-content: center;

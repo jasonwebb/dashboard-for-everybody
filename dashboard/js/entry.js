@@ -33,6 +33,13 @@ let outputDeviceStatusEl = document.getElementById('output-device-status');
 // Current sensor
 let currentSensor = inputSensorSelectedEl.value;
 
+// Triggers
+let triggers = {
+  distance: [],
+  temperature: [],
+  light: []
+};
+
 // Live chart elements and configs
 const maxReadings = 100;
 let liveChart;
@@ -92,24 +99,9 @@ let optionsObject = {
   }
 };
 
-// Triggers
-let triggers = {
-  distance: [],
-  temperature: [],
-  light: []
-};
-
-/**
-  trigger: {
-    threshold: int,
-    aboveOrBelow: String ('above', 'below')
-    action: String ('pulse', 'on', 'off', 'interval')
-  }
-*/
-
 
 //================================================
-//  Wait for page to finish loading before 
+//  Wait for page to finish loading before
 //  initializing handlers and live components
 //================================================
 window.addEventListener('DOMContentLoaded', function(e) {
@@ -119,14 +111,16 @@ window.addEventListener('DOMContentLoaded', function(e) {
     data: dataObject,
     options: optionsObject
   });
-  
+
   // Add a new trigger when "Add Trigger" button is clicked
   let addTriggerButton = document.querySelector('#add-trigger-panel button[type="submit"]');
   addTriggerButton.addEventListener('click', addNewTrigger);
 
   // Switch data streams when sensor selection is changed
   inputSensorSelectedEl.addEventListener('change', function(e) {
-    switch(e.target.value) {
+    currentSensor = e.target.value;
+
+    switch(currentSensor) {
       case 'distance':
         currentSensorData = distanceData;
         resetDataTable();
@@ -142,6 +136,8 @@ window.addEventListener('DOMContentLoaded', function(e) {
         resetDataTable();
         break;
     }
+
+    displayTriggers();
   });
 
   // Toggle mock data using 'Space'
@@ -157,8 +153,8 @@ window.addEventListener('DOMContentLoaded', function(e) {
 
 
 //================================================================
-//  Remove all rows from hidden data table for chart, and add 
-//  all previous sensor readings for the current sensor. 
+//  Remove all rows from hidden data table for chart, and add
+//  all previous sensor readings for the current sensor.
 //  Called when user selects a new sensor from dropdown.
 //================================================================
 function resetDataTable() {
@@ -217,7 +213,7 @@ function createMockInputData() {
       case 'distance':
         processMessages(inputDeviceDistanceSensorTopic, getRandomInt(0,4096));
         break;
-        
+
       case 'temperature':
         processMessages(inputDeviceTemperatureSensorTopic, getRandomInt(0,4096));
         break;
@@ -248,7 +244,7 @@ if(!mockDataEnabled) {
     // Listen for device status messages
     client.subscribe(inputDeviceStatusTopic);
     client.subscribe(outputDeviceStatusTopic);
-  
+
     // Listen for sensor data
     client.subscribe(inputDeviceDistanceSensorTopic);
 
@@ -396,26 +392,69 @@ function addNewTrigger(e) {
     let aboveOrBelowEl = document.querySelector('#add-trigger-panel input[name="above-below"]:checked');
     let thresholdEl = document.querySelector('#add-trigger-panel input[name="threshold-value"]');
     let motorActionEl = document.querySelector('#add-trigger-panel input[name="motor-action"]:checked');
-    
+
     // For demo purposes, forget about form validation and just make sure the values aren't null
     let aboveOrBelow = aboveOrBelowEl != undefined ? aboveOrBelowEl.value : 'above';
-    let thresholdValue = thresholdEl.value != '' ? parseInt(thresholdEl.value) : 500;
+    let threshold = thresholdEl.value != '' ? parseInt(thresholdEl.value) : 500;
     let motorAction = motorActionEl != undefined ? motorActionEl.value : 'pulse-once';
 
     // Create a new trigger for this sensor from the form data
-    let newTrigger = {
-      aboveOrBelow: aboveOrBelow,
-      threshold: thresholdValue,
-      motorAction: motorAction
-    };
+    let newTriggerEl = document.createElement('div');
+    newTriggerEl.classList = 'panel trigger is-blue';
 
-    currentTriggers.push(newTrigger);
+    newTriggerEl.innerHTML = `
+      <h2>
+        ${currentSensor.charAt(0).toUpperCase() + currentSensor.slice(1)} Trigger #${currentTriggers.length + 1}
+      </h2>
+
+      <button class="remove-icon-button remove-button">
+        <span class="icon fas fa-times" aria-hidden="true"></span>
+        <span class="visually-hidden">Remove trigger</span>
+      </button>
+
+      <div class="name">
+        <span class="visually-hidden">The </span>
+        Motor
+      </div>
+
+      <div class="action">
+        Will
+        <span class="is-highlighted">${motorAction.replace(/-/g, ' ')}</span>
+        when the
+        <span class="is-highlighted">${currentSensor}</span>
+        sensor goes
+        <span class="is-highlighted">${aboveOrBelow}</span>
+        <span class="is-highlighted">${threshold}</span>
+      </div>
+
+      <button class="remove-button button is-danger">Remove this trigger</button>
+    `;
+
+    currentTriggers.push(newTriggerEl);
     displayTriggers();
   }
 }
 
 function removeTrigger(trigger) {
+  let currentTriggers;
 
+  switch(currentSensor) {
+    case 'distance':
+      currentTriggers = triggers.distance;
+      break;
+
+    case 'temperature':
+      currentTriggers = triggers.temperature;
+      break;
+
+    case 'light':
+      currentTriggers = triggers.light;
+      break;
+  }
+
+  // console.log(trigger);
+
+  currentTriggers = currentTriggers.splice(currentTriggers.indexOf(trigger), 1);
   displayTriggers();
 }
 
@@ -441,34 +480,20 @@ function displayTriggers() {
 
   // Display all the current triggers for this sensor
   currentTriggers.forEach(function(trigger, index) {
-    columns[index].innerHTML = `
-      <div class="panel trigger is-blue">
-        <h2>
-          ${currentSensor.charAt(0).toUpperCase() + currentSensor.slice(1)} Trigger #${index + 1}
-          <button class="remove-button">
-            <span class="icon fas fa-times" aria-hidden="true"></span>
-            <span class="visually-hidden">Remove trigger</span>
-          </button>
-        </h2>
+    columns[index].innerHTML = '';
+    columns[index].appendChild(trigger);
+    trigger.focus();
 
-        <div class="name">
-          <span class="visually-hidden">The </span>
-          Motor
-        </div>
+    let removeButtons = trigger.querySelectorAll('.remove-button');
+    removeButtons.forEach((removeButton) => {
+      if(removeButton.getAttribute('data-has-click-handler')) {
+        removeButton.removeEventListener('click', removeButtonClickHandler);
+        removeButton.removeAttribute('data-has-click-handler');
+      }
 
-        <div class="action">
-          Will 
-          <span class="is-highlighted">${trigger.motorAction}</span> 
-          when the 
-          <span class="is-highlighted">${currentSensor}</span> 
-          sensor goes 
-          <span class="is-highlighted">${trigger.aboveOrBelow}</span>
-          <span class="is-highlighted">${trigger.thresholdValue}</span>
-        </div>
-
-        <button class="button is-danger">Remove this trigger</button>
-      </div>
-    `;
+      removeButton.addEventListener('click', removeButtonClickHandler);
+      removeButton.setAttribute('data-has-click-handler', true);
+    });
   });
 
   // Add placeholders for remaining panels if there aren't enough triggers
@@ -483,11 +508,16 @@ function displayTriggers() {
   }
 }
 
+// Click handler function for remove buttons on each trigger card
+function removeButtonClickHandler(e) {
+  removeTrigger(e.target.closest('.trigger'));
+}
+
 
 //=========================
 //  Device status check
 //=========================
-// Automatically set device statuses to "offline" if no keep alive 
+// Automatically set device statuses to "offline" if no keep alive
 // has been received in a while
 function checkDevices() {
   let currentTime = Date.now();
