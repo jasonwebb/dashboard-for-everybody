@@ -50,8 +50,6 @@ let triggers = {
   light: []
 };
 
-let currentTriggers = triggers.distance;
-
 // Live chart elements and configs
 const maxReadings = 100;
 let liveChart;
@@ -380,6 +378,22 @@ function resetDataTable() {
 //======================================================
 // Display the number of triggers set up for this sensor
 function displayTriggerCount() {
+  let currentTriggers;
+
+  switch(currentSensor) {
+    case 'distance':
+      currentTriggers = triggers.distance;
+      break;
+
+    case 'temperature':
+      currentTriggers = triggers.temperature;
+      break;
+
+    case 'light':
+      currentTriggers = triggers.light;
+      break;
+  }
+
   let triggerCountEl = document.querySelector('#triggers-set-up .value');
   triggerCountEl.innerHTML = currentTriggers.length;
 }
@@ -416,6 +430,22 @@ function displaySensorReading() {
 // Creates a new trigger for the current sensor when the "Add Trigger" button is clicked
 function addNewTrigger(e) {
   e.preventDefault();
+
+  let currentTriggers;
+
+  switch(currentSensor) {
+    case 'distance':
+      currentTriggers = triggers.distance;
+      break;
+
+    case 'temperature':
+      currentTriggers = triggers.temperature;
+      break;
+
+    case 'light':
+      currentTriggers = triggers.light;
+      break;
+  }
 
   if(currentTriggers.length < 3) {
     let aboveOrBelowEl = document.querySelector('#add-trigger-panel input[name="above-below"]:checked');
@@ -466,6 +496,22 @@ function addNewTrigger(e) {
 }
 
 function removeTrigger(trigger) {
+  let currentTriggers;
+
+  switch(currentSensor) {
+    case 'distance':
+      currentTriggers = triggers.distance;
+      break;
+
+    case 'temperature':
+      currentTriggers = triggers.temperature;
+      break;
+
+    case 'light':
+      currentTriggers = triggers.light;
+      break;
+  }
+
   // Remove this trigger from the array of triggers
   currentTriggers = currentTriggers.splice(currentTriggers.indexOf(trigger), 1);
 
@@ -477,6 +523,22 @@ function removeTrigger(trigger) {
 
 // Display all triggers that have been set
 function displayTriggers() {
+  let currentTriggers;
+
+  switch(currentSensor) {
+    case 'distance':
+      currentTriggers = triggers.distance;
+      break;
+
+    case 'temperature':
+      currentTriggers = triggers.temperature;
+      break;
+
+    case 'light':
+      currentTriggers = triggers.light;
+      break;
+  }
+
   let columns = document.querySelectorAll('.trigger-panels .column:not(:first-of-type)');
 
   // Display all the current triggers for this sensor
