@@ -113,8 +113,7 @@ let optionsObject = {
 
 
 //================================================
-//  Wait for page to finish loading before
-//  initializing handlers and live components
+//  Main program setup
 //================================================
 window.addEventListener('DOMContentLoaded', function(e) {
   // Initialize live chart
@@ -123,6 +122,9 @@ window.addEventListener('DOMContentLoaded', function(e) {
     data: dataObject,
     options: optionsObject
   });
+
+  // Periodically check input/output devices for keep-alive messages
+  setInterval(checkDevices, 3000);
 
   // Add a new trigger when "Add Trigger" button is clicked
   let addTriggerButton = document.querySelector('#add-trigger-panel button[type="submit"]');
@@ -165,79 +167,11 @@ window.addEventListener('DOMContentLoaded', function(e) {
   });
 
   // Make "pause" button toggle live data collection
-  document.querySelector('#pause-controls button').addEventListener('click', togglePauseControls);
+  // document.querySelector('#pause-controls button').addEventListener('click', togglePauseControls);
 
+  // Render any pre-defined triggers, or just placeholders if there are none
   displayTriggers();
 });
-
-function togglePauseControls() {
-  isPaused = !isPaused;
-
-  let pauseButton = document.querySelector('#pause-controls button');
-  let pauseIcon = pauseButton.querySelector('.pause-icon');
-  let resumeIcon = pauseButton.querySelector('.resume-icon');
-  let pauseDescription = pauseButton.querySelector('.pause-description');
-  let resumeDescription = pauseButton.querySelector('.resume-description');
-
-  if(!isPaused) {
-    pauseIcon.classList.remove('is-hidden');
-    pauseDescription.classList.remove('is-hidden');
-
-    resumeIcon.classList.add('is-hidden');
-    resumeDescription.classList.add('is-hidden');
-  } else {
-    pauseIcon.classList.add('is-hidden');
-    pauseDescription.classList.add('is-hidden');
-
-    resumeIcon.classList.remove('is-hidden');
-    resumeDescription.classList.remove('is-hidden');
-  }
-}
-
-
-//================================================================
-//  Remove all rows from hidden data table for chart, and add
-//  all previous sensor readings for the current sensor.
-//  Called when user selects a new sensor from dropdown.
-//================================================================
-function resetDataTable() {
-  let tbody = document.querySelector('#sensor-data tbody');
-  let oldRows = tbody.querySelectorAll('tr');
-
-  // Remove all the old readings from previous sensor
-  oldRows.forEach((row) => {
-    row.remove();
-  });
-
-  // Add all the previous sensor readings from the current sensor
-  for(let i = currentSensorData.data.length - 1; i >= 0; i--) {
-    let row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${currentSensorData.data[i]}</td>
-      <td>${currentSensorData.labels[i]}</td>
-    `;
-    tbody.appendChild(row);
-  }
-}
-
-
-//====================================================
-//  Periodically check that devices are connected
-//====================================================
-setInterval(checkDevices, 3000);
-
-// Artificially set input and output device statuses to "online" within 5s of page load
-if(mockDataEnabled) {
-  setTimeout(() => {
-    inputDeviceOnline = true;
-    displayDeviceStatus();
-  }, getRandomInt(1000,5000));
-
-  setTimeout(() => {
-    outputDeviceOnline = true;
-    displayDeviceStatus();
-  }, getRandomInt(1000,5000));
-}
 
 
 //==========================
@@ -246,6 +180,17 @@ if(mockDataEnabled) {
 if(mockDataEnabled) {
   setInterval(createMockInputData, 100);
   setInterval(createMockKeepAliveMessages, 500);
+
+  // Artificially set input and output device statuses to "online" within 5s of page load
+  setTimeout(() => {
+    inputDeviceOnline = true;
+    displayDeviceStatus();
+  }, getRandomInt(1000, 4000));
+
+  setTimeout(() => {
+    outputDeviceOnline = true;
+    displayDeviceStatus();
+  }, getRandomInt(1000, 4000));
 }
 
 // Generate random data for the active sensor, if the input device is online
@@ -298,6 +243,11 @@ if(!mockDataEnabled) {
   });
 }
 
+
+//==========================================================
+//  Process data messages coming from live input device 
+//  or mock data loops
+//==========================================================
 // Act on messages from devices or mock data events
 function processMessages(topic, message) {
   switch(topic) {
@@ -326,7 +276,7 @@ function processMessages(topic, message) {
       currentSensorData.data.push(parseInt(message));
 
       // Remove first data point when we have too many
-      if(currentSensorData.labels.length > maxReadings) {
+      if(currentSensorData.labels.length >= maxReadings) {
         currentSensorData.labels.shift();
         currentSensorData.data.shift();
       }
@@ -360,9 +310,12 @@ function processMessages(topic, message) {
       }
 
       // Remove oldest sensor reading when maximum threshold reached
-      if(tbody.children.length > maxReadings) {
+      if(tbody.children.length >= maxReadings) {
         tbody.children[tbody.children.length - 1].remove();
       }
+
+      // Display this new sensor value on the "last reading" highlight block
+      displaySensorReading();
 
       // Add to total reading count for this sensor
       switch(currentSensor) {
@@ -394,6 +347,37 @@ function processMessages(topic, message) {
   }
 }
 
+
+//================================================================
+//  Remove all rows from hidden data table for chart, and add
+//  all previous sensor readings for the current sensor.
+//  Called when user selects a new sensor from dropdown.
+//================================================================
+function resetDataTable() {
+  let tbody = document.querySelector('#sensor-data tbody');
+  let oldRows = tbody.querySelectorAll('tr');
+
+  // Remove all the old readings from previous sensor
+  oldRows.forEach((row) => {
+    row.remove();
+  });
+
+  // Add all the previous sensor readings from the current sensor
+  for(let i = currentSensorData.data.length - 1; i >= 0; i--) {
+    let row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${currentSensorData.data[i]}</td>
+      <td>${currentSensorData.labels[i]}</td>
+    `;
+    tbody.appendChild(row);
+  }
+}
+
+
+//======================================================
+//  Display live data in the "highlight" blocks next 
+//  to the live chart
+//======================================================
 // Display the number of triggers set up for this sensor
 function displayTriggerCount() {
   let triggerCountEl = document.querySelector('#triggers-set-up .value');
@@ -419,34 +403,10 @@ function displayTotalReadings() {
   }
 }
 
-
-//==========================================
-//  Device status updates
-//==========================================
-function displayDeviceStatus() {
-  // Display input device status
-  let connectedEl = inputDeviceStatusEl.querySelector('.connected');
-  let notConnectedEl = inputDeviceStatusEl.querySelector('.not-connected');
-
-  if(inputDeviceOnline) {
-    connectedEl.classList.add('is-visible');
-    notConnectedEl.classList.remove('is-visible');
-  } else {
-    connectedEl.classList.remove('is-visible');
-    notConnectedEl.classList.add('is-visible');
-  }
-
-  // Display output device status
-  connectedEl = outputDeviceStatusEl.querySelector('.connected');
-  notConnectedEl = outputDeviceStatusEl.querySelector('.not-connected');
-
-  if(outputDeviceOnline) {
-    connectedEl.classList.add('is-visible');
-    notConnectedEl.classList.remove('is-visible');
-  } else {
-    connectedEl.classList.remove('is-visible');
-    notConnectedEl.classList.add('is-visible');
-  }
+// Display the most recent sensor reading
+function displaySensorReading() {
+  let sensorReadingEl = document.querySelector('#last-reading .value');
+  sensorReadingEl.innerHTML = currentSensorData.data[currentSensorData.data.length - 1];
 }
 
 
@@ -549,17 +509,17 @@ function displayTriggers() {
   }
 }
 
-// Click handler function for remove buttons on each trigger card
-function removeButtonClickHandler(e) {
-  removeTrigger(e.target.closest('.trigger'));
-}
+  // Click handler function for remove buttons on each trigger card
+  function removeButtonClickHandler(e) {
+    removeTrigger(e.target.closest('.trigger'));
+  }
 
 
-//=========================
-//  Device status check
-//=========================
+//==========================================
+//  Device status checking and display
+//==========================================
 // Automatically set device statuses to "offline" if no keep alive
-// has been received in a while
+// has been received in a while. Called periodically by an interval.
 function checkDevices() {
   let currentTime = Date.now();
 
@@ -574,6 +534,33 @@ function checkDevices() {
   }
 }
 
+// Display the current status of each device at the top of the page
+function displayDeviceStatus() {
+  // Display input device status
+  let connectedEl = inputDeviceStatusEl.querySelector('.connected');
+  let notConnectedEl = inputDeviceStatusEl.querySelector('.not-connected');
+
+  if(inputDeviceOnline) {
+    connectedEl.classList.add('is-visible');
+    notConnectedEl.classList.remove('is-visible');
+  } else {
+    connectedEl.classList.remove('is-visible');
+    notConnectedEl.classList.add('is-visible');
+  }
+
+  // Display output device status
+  connectedEl = outputDeviceStatusEl.querySelector('.connected');
+  notConnectedEl = outputDeviceStatusEl.querySelector('.not-connected');
+
+  if(outputDeviceOnline) {
+    connectedEl.classList.add('is-visible');
+    notConnectedEl.classList.remove('is-visible');
+  } else {
+    connectedEl.classList.remove('is-visible');
+    notConnectedEl.classList.add('is-visible');
+  }
+}
+
 
 //==================
 //  Utilities
@@ -583,4 +570,29 @@ function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
+}
+
+
+function togglePauseControls() {
+  isPaused = !isPaused;
+
+  let pauseButton = document.querySelector('#pause-controls button');
+  let pauseIcon = pauseButton.querySelector('.pause-icon');
+  let resumeIcon = pauseButton.querySelector('.resume-icon');
+  let pauseDescription = pauseButton.querySelector('.pause-description');
+  let resumeDescription = pauseButton.querySelector('.resume-description');
+
+  if(!isPaused) {
+    pauseIcon.classList.remove('is-hidden');
+    pauseDescription.classList.remove('is-hidden');
+
+    resumeIcon.classList.add('is-hidden');
+    resumeDescription.classList.add('is-hidden');
+  } else {
+    pauseIcon.classList.add('is-hidden');
+    pauseDescription.classList.add('is-hidden');
+
+    resumeIcon.classList.remove('is-hidden');
+    resumeDescription.classList.remove('is-hidden');
+  }
 }
