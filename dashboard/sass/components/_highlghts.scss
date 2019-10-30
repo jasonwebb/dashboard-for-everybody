@@ -1,0 +1,31 @@
+#highlights-panel {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  .highlight {
+    flex: 0 0 calc(50% - 10px);
+    background-color: rgba(0,0,0,.05);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    padding: 20px;
+
+    .value {
+      width: 100%;
+      background: none;
+      padding: 0;
+      margin: 0;
+      font-weight: bold;
+      font-size: 36px;
+      text-align: center;
+    }
+
+    .description {
+      font-size: 18px;
+    }
+  }
+}

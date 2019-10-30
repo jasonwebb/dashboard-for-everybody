@@ -33,6 +33,13 @@ let outputDeviceStatusEl = document.getElementById('output-device-status');
 // Current sensor
 let currentSensor = inputSensorSelectedEl.value;
 
+// Sensor data
+let totalReadings = {
+  distance: 0,
+  temperature: 0,
+  light: 0
+};
+
 // Triggers
 let triggers = {
   distance: [],
@@ -138,6 +145,7 @@ window.addEventListener('DOMContentLoaded', function(e) {
     }
 
     displayTriggers();
+    displayTriggerCount();
   });
 
   // Toggle mock data using 'Space'
@@ -321,6 +329,23 @@ function processMessages(topic, message) {
         tbody.children[tbody.children.length - 1].remove();
       }
 
+      // Add to total reading count for this sensor
+      switch(currentSensor) {
+        case 'distance':
+          totalReadings.distance++;
+          break;
+
+        case 'temperature':
+          totalReadings.temperature++;
+          break;
+
+        case 'light':
+          totalReadings.light++;
+          break;
+      }
+
+      displayTotalReadings();
+
       break;
 
     // Output device has sent keep-alive message
@@ -330,6 +355,43 @@ function processMessages(topic, message) {
         displayDeviceStatus();
       }
 
+      break;
+  }
+}
+
+function displayTriggerCount() {
+  let triggerCountEl = document.querySelector('#triggers-set-up .value');
+
+  switch(currentSensor) {
+    case 'distance':
+      triggerCountEl.innerHTML = triggers.distance.length;
+      break;
+
+    case 'temperature':
+      triggerCountEl.innerHTML = triggers.temperature.length;
+      break;
+
+    case 'light':
+      triggerCountEl.innerHTML = triggers.light.length;
+      break;
+  }
+}
+
+// Display the total number of readings taken for this sensor so far
+function displayTotalReadings() {
+  let readingsSoFarEl = document.querySelector('#readings-so-far .value');
+
+  switch(currentSensor) {
+    case 'distance':
+      readingsSoFarEl.innerHTML = totalReadings.distance;
+      break;
+
+    case 'temperature':
+      readingsSoFarEl.innerHTML = totalReadings.temperature;
+      break;
+
+    case 'light':
+      readingsSoFarEl.innerHTML = totalReadings.light;
       break;
   }
 }
@@ -432,6 +494,7 @@ function addNewTrigger(e) {
 
     currentTriggers.push(newTriggerEl);
     displayTriggers();
+    displayTriggerCount();
   }
 }
 
@@ -456,6 +519,7 @@ function removeTrigger(trigger) {
 
   currentTriggers = currentTriggers.splice(currentTriggers.indexOf(trigger), 1);
   displayTriggers();
+  displayTriggerCount();
 }
 
 // Display all triggers that have been set

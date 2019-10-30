@@ -72,14 +72,14 @@
 
               <table>
                 <caption>Last 50 sensor readings, sorted newest to oldest</caption>
-  
+
                 <thead>
                   <tr>
                     <th scope="col">Sensor value</th>
                     <th scope="col">Timestamp</th>
                   </tr>
                 </thead>
-  
+
                 <tbody></tbody>
               </table>
             </div>
@@ -87,12 +87,21 @@
         </div>
 
         <div class="column">
-          <div class="panel">
-            <ul>
-              <li>Number of events so far</li>
-              <li>Number of triggers set up</li>
-              <li>Input readings so far</li>
-            </ul>
+          <div class="panel" id="highlights-panel">
+            <div class="highlight" id="events-so-far">
+              <div class="value">0</div>
+              <div class="description">events so far</div>
+            </div>
+
+            <div class="highlight" id="triggers-set-up">
+              <div class="value">0</div>
+              <div class="description">triggers set up</div>
+            </div>
+
+            <div class="highlight" id="readings-so-far">
+              <div class="value">0</div>
+              <div class="description">readings so far</div>
+            </div>
           </div>
         </div>
       </div>
@@ -105,13 +114,14 @@
 
             <form>
               <div class="form-group">
+                <!-- "When data goes ..." radio button group -->
                 <div class="field is-grouped">
                   <fieldset>
                     <legend class="label">When data goes <span aria-hidden="true">...</span></legend>
 
                     <div class="control">
                       <label>
-                        <input type="radio" name="above-below" value="above">
+                        <input type="radio" name="above-below" value="above" checked="checked">
                         Above
                       </label>
                     </div>
@@ -124,44 +134,48 @@
                     </div>
                   </fieldset>
                 </div>
+                <!-- /end "When data goes ..." radio button group -->
 
+                <!-- "This value" text input -->
                 <div class="field">
                   <label for="threshold-value" class="label">This value:</label>
 
                   <div class="control">
-                    <input type="number" id="threshold-value" name="threshold-value" class="input">
+                    <input type="number" id="threshold-value" name="threshold-value" class="input" placeholder="500">
                   </div>
                 </div>
               </div>
 
+              <!-- "Make the motor ..." radio button group -->
               <div class="form-group">
                 <div class="field is-grouped">
                   <fieldset>
-                    <legend class="label">Make the motor <span aria-hidden="true"></span></legend>
+                    <legend class="label">Make the motor <span aria-hidden="true">...</span></legend>
 
                     <div class="control">
                       <label>
-                        <input type="radio" name="motor-action" value="pulse-once">
+                        <input type="radio" name="motor-action" value="pulse-once" checked="checked">
                         Pulse once
                       </label>
                     </div>
-                    
+
                     <div class="control">
                       <label>
                         <input type="radio" name="motor-action" value="pulse-three-times">
                         Pulse three times
                       </label>
                     </div>
-                    
+
                     <div class="control">
                       <label>
-                        <input type="radio" name="motor-action" value="stay-on">
+                        <input type="radio" name="motor-action" value="turn-on-and-stay-on">
                         Turn on and stay on
                       </label>
                     </div>
                   </fieldset>
                 </div>
               </div>
+              <!-- /end "Make the motor ..." radio button group -->
 
               <button type="submit" class="button is-info">Add trigger</button>
             </form>
