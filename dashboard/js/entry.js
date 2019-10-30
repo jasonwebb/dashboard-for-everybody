@@ -5,9 +5,6 @@ let charts = require('chart.js');
 // MQTT setup
 let client = mqtt.connect('wss://test.mosquitto.org:8081');
 
-// Enable fake devices mode
-let mockDataEnabled = true;
-
 // Pause control for data collection
 let isPaused = false;
 
@@ -109,6 +106,21 @@ let optionsObject = {
   }
 };
 
+// Mock data generation
+let mockDataEnabled = true;
+let mockDataInterval;
+let mockDataTarget = getRandomInt(0,4096);
+let mockDataVelocity = 300;
+let mockDataCurrent = getRandomInt(0,4096);
+
+mockDataInterval = setInterval(setMockDataTarget, getRandomInt(1000,5000));
+
+function setMockDataTarget() {
+  mockDataTarget = getRandomInt(0,4096);
+  clearInterval(mockDataInterval);
+  mockDataInterval = setInterval(setMockDataTarget, getRandomInt(1000,5000));
+}
+
 
 //================================================
 //  Main program setup
@@ -160,7 +172,7 @@ window.addEventListener('DOMContentLoaded', function(e) {
   document.body.addEventListener('keydown', function(e) {
     if(e.key === ' ') {
       e.preventDefault();
-      togglePauseControls();
+      // togglePauseControls();
     }
   });
 
@@ -194,18 +206,28 @@ if(mockDataEnabled) {
 // Generate random data for the active sensor, if the input device is online
 function createMockInputData() {
   if(inputDeviceOnline && mockDataEnabled && !isPaused) {
+    if(mockDataCurrent != mockDataTarget) {
+      if(mockDataCurrent + mockDataVelocity < mockDataTarget) {
+        mockDataCurrent += mockDataVelocity;
+      } else if(mockDataCurrent - mockDataVelocity > mockDataTarget) {
+        mockDataCurrent -= mockDataVelocity;
+      }
+    } else {
+      mockDataTarget = getRandomInt(0,4096);
+    }
+
     // Send random data on appropriate MQTT topics
     switch(currentSensor) {
       case 'distance':
-        processMessages(inputDeviceDistanceSensorTopic, getRandomInt(0,4096));
+        processMessages(inputDeviceDistanceSensorTopic, mockDataCurrent);
         break;
 
       case 'temperature':
-        processMessages(inputDeviceTemperatureSensorTopic, getRandomInt(0,4096));
+        processMessages(inputDeviceTemperatureSensorTopic, mockDataCurrent);
         break;
 
       case 'light':
-        processMessages(inputDeviceLightSensorTopic, getRandomInt(0,4096));
+        processMessages(inputDeviceLightSensorTopic, mockDataCurrent);
         break;
     }
   }
@@ -635,26 +657,26 @@ function getRandomInt(min, max) {
 }
 
 
-function togglePauseControls() {
-  isPaused = !isPaused;
+// function togglePauseControls() {
+//   isPaused = !isPaused;
 
-  let pauseButton = document.querySelector('#pause-controls button');
-  let pauseIcon = pauseButton.querySelector('.pause-icon');
-  let resumeIcon = pauseButton.querySelector('.resume-icon');
-  let pauseDescription = pauseButton.querySelector('.pause-description');
-  let resumeDescription = pauseButton.querySelector('.resume-description');
+//   let pauseButton = document.querySelector('#pause-controls button');
+//   let pauseIcon = pauseButton.querySelector('.pause-icon');
+//   let resumeIcon = pauseButton.querySelector('.resume-icon');
+//   let pauseDescription = pauseButton.querySelector('.pause-description');
+//   let resumeDescription = pauseButton.querySelector('.resume-description');
 
-  if(!isPaused) {
-    pauseIcon.classList.remove('is-hidden');
-    pauseDescription.classList.remove('is-hidden');
+//   if(!isPaused) {
+//     pauseIcon.classList.remove('is-hidden');
+//     pauseDescription.classList.remove('is-hidden');
 
-    resumeIcon.classList.add('is-hidden');
-    resumeDescription.classList.add('is-hidden');
-  } else {
-    pauseIcon.classList.add('is-hidden');
-    pauseDescription.classList.add('is-hidden');
+//     resumeIcon.classList.add('is-hidden');
+//     resumeDescription.classList.add('is-hidden');
+//   } else {
+//     pauseIcon.classList.add('is-hidden');
+//     pauseDescription.classList.add('is-hidden');
 
-    resumeIcon.classList.remove('is-hidden');
-    resumeDescription.classList.remove('is-hidden');
-  }
-}
+//     resumeIcon.classList.remove('is-hidden');
+//     resumeDescription.classList.remove('is-hidden');
+//   }
+// }
