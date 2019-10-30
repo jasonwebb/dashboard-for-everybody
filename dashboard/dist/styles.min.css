@@ -13,6 +13,9 @@
   width: 1px !important;
   white-space: nowrap !important; }
 
+.is-hidden {
+  display: none; }
+
 * {
   box-sizing: border-box; }
 
@@ -48,11 +51,17 @@ h2 {
   text-decoration: underline;
   outline: 0; }
 
-.button.is-info:focus, .button.is-info:hover {
-  box-shadow: 0 0 0 2px white, 0 0 0 5px #209cee !important; }
+.button.is-info {
+  background-color: #1F7AB7;
+  color: #fff; }
+  .button.is-info:focus, .button.is-info:hover {
+    box-shadow: 0 0 0 2px white, 0 0 0 5px #209cee !important; }
 
-.button.is-danger:focus, .button.is-danger:hover {
-  box-shadow: 0 0 0 2px white, 0 0 0 5px #ff3860 !important; }
+.button.is-danger {
+  background-color: #E4113B; }
+  .button.is-danger:focus, .button.is-danger:hover {
+    box-shadow: 0 0 0 2px white, 0 0 0 5px #E4113B !important;
+    color: #fff; }
 
 .panel {
   background-color: white;
@@ -115,7 +124,10 @@ h2 {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 20px; }
+    padding: 0 20px;
+    margin-bottom: 0; }
+    #highlights-panel .highlight:nth-of-type(1), #highlights-panel .highlight:nth-of-type(2) {
+      margin-bottom: 1.5rem; }
     #highlights-panel .highlight .value {
       width: 100%;
       background: none;
@@ -126,6 +138,20 @@ h2 {
       text-align: center; }
     #highlights-panel .highlight .description {
       font-size: 18px; }
+    #highlights-panel .highlight#pause-controls {
+      padding: 0; }
+      #highlights-panel .highlight#pause-controls button {
+        border: 0;
+        background: none;
+        padding: 0 20px;
+        height: 100%;
+        cursor: pointer; }
+        #highlights-panel .highlight#pause-controls button:focus {
+          outline: none;
+          box-shadow: inset 0 0 0 4px #209cee; }
+        #highlights-panel .highlight#pause-controls button .icons {
+          font-size: 32px;
+          margin-bottom: 10px; }
 
 #add-trigger-panel:focus-within {
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5), 0 0 20px 0 rgba(0, 0, 0, 0.15); }

@@ -8,6 +8,9 @@ let client = mqtt.connect('wss://test.mosquitto.org:8081');
 // Enable fake devices mode
 let mockDataEnabled = true;
 
+// Pause control for data collection
+let isPaused = false;
+
 // MQTT topics
 const inputDeviceStatusTopic = 'iothackday/dfe/input-device';
 const outputDeviceStatusTopic = 'iothackday/dfe/output-device';
@@ -152,12 +155,38 @@ window.addEventListener('DOMContentLoaded', function(e) {
   document.body.addEventListener('keydown', function(e) {
     if(e.key === ' ') {
       e.preventDefault();
-      mockDataEnabled = !mockDataEnabled;
+      togglePauseControls();
     }
   });
 
+  document.querySelector('#pause-controls button').addEventListener('click', togglePauseControls);
+
   displayTriggers();
 });
+
+function togglePauseControls() {
+  isPaused = !isPaused;
+
+  let pauseButton = document.querySelector('#pause-controls button');
+  let pauseIcon = pauseButton.querySelector('.pause-icon');
+  let resumeIcon = pauseButton.querySelector('.resume-icon');
+  let pauseDescription = pauseButton.querySelector('.pause-description');
+  let resumeDescription = pauseButton.querySelector('.resume-description');
+
+  if(!isPaused) {
+    pauseIcon.classList.remove('is-hidden');
+    pauseDescription.classList.remove('is-hidden');
+
+    resumeIcon.classList.add('is-hidden');
+    resumeDescription.classList.add('is-hidden');
+  } else {
+    pauseIcon.classList.add('is-hidden');
+    pauseDescription.classList.add('is-hidden');
+
+    resumeIcon.classList.remove('is-hidden');
+    resumeDescription.classList.remove('is-hidden');
+  }
+}
 
 
 //================================================================
@@ -215,7 +244,7 @@ if(mockDataEnabled) {
 
 // Generate random data for the active sensor, if the input device is online
 function createMockInputData() {
-  if(inputDeviceOnline && mockDataEnabled) {
+  if(inputDeviceOnline && mockDataEnabled && !isPaused) {
     // Send random data on appropriate MQTT topics
     switch(currentSensor) {
       case 'distance':
@@ -235,7 +264,7 @@ function createMockInputData() {
 
 // Generate fake "keep alive" messages as though devices were online
 function createMockKeepAliveMessages() {
-  if(mockDataEnabled) {
+  if(mockDataEnabled && !isPaused) {
     processMessages(inputDeviceStatusTopic, 'online');
     processMessages(outputDeviceStatusTopic, 'online');
   }
