@@ -50,6 +50,8 @@ let triggers = {
   light: []
 };
 
+let currentTriggers = triggers.distance;
+
 // Live chart elements and configs
 const maxReadings = 100;
 let liveChart;
@@ -132,16 +134,19 @@ window.addEventListener('DOMContentLoaded', function(e) {
 
     switch(currentSensor) {
       case 'distance':
+        currentTriggers = triggers.distance;
         currentSensorData = distanceData;
         resetDataTable();
         break;
 
       case 'temperature':
+        currentTriggers = triggers.temperature;
         currentSensorData = temperatureData;
         resetDataTable();
         break;
 
       case 'light':
+        currentTriggers = triggers.light;
         currentSensorData = lightData;
         resetDataTable();
         break;
@@ -159,6 +164,7 @@ window.addEventListener('DOMContentLoaded', function(e) {
     }
   });
 
+  // Make "pause" button toggle live data collection
   document.querySelector('#pause-controls button').addEventListener('click', togglePauseControls);
 
   displayTriggers();
@@ -388,22 +394,10 @@ function processMessages(topic, message) {
   }
 }
 
+// Display the number of triggers set up for this sensor
 function displayTriggerCount() {
   let triggerCountEl = document.querySelector('#triggers-set-up .value');
-
-  switch(currentSensor) {
-    case 'distance':
-      triggerCountEl.innerHTML = triggers.distance.length;
-      break;
-
-    case 'temperature':
-      triggerCountEl.innerHTML = triggers.temperature.length;
-      break;
-
-    case 'light':
-      triggerCountEl.innerHTML = triggers.light.length;
-      break;
-  }
+  triggerCountEl.innerHTML = currentTriggers.length;
 }
 
 // Display the total number of readings taken for this sensor so far
@@ -463,22 +457,6 @@ function displayDeviceStatus() {
 function addNewTrigger(e) {
   e.preventDefault();
 
-  let currentTriggers;
-
-  switch(currentSensor) {
-    case 'distance':
-      currentTriggers = triggers.distance;
-      break;
-
-    case 'temperature':
-      currentTriggers = triggers.temperature;
-      break;
-
-    case 'light':
-      currentTriggers = triggers.light;
-      break;
-  }
-
   if(currentTriggers.length < 3) {
     let aboveOrBelowEl = document.querySelector('#add-trigger-panel input[name="above-below"]:checked');
     let thresholdEl = document.querySelector('#add-trigger-panel input[name="threshold-value"]');
@@ -528,47 +506,17 @@ function addNewTrigger(e) {
 }
 
 function removeTrigger(trigger) {
-  let currentTriggers;
-
-  switch(currentSensor) {
-    case 'distance':
-      currentTriggers = triggers.distance;
-      break;
-
-    case 'temperature':
-      currentTriggers = triggers.temperature;
-      break;
-
-    case 'light':
-      currentTriggers = triggers.light;
-      break;
-  }
-
-  // console.log(trigger);
-
+  // Remove this trigger from the array of triggers
   currentTriggers = currentTriggers.splice(currentTriggers.indexOf(trigger), 1);
+
+  // TODO: Re-order the numbers
+
   displayTriggers();
   displayTriggerCount();
 }
 
 // Display all triggers that have been set
 function displayTriggers() {
-  let currentTriggers;
-
-  switch(currentSensor) {
-    case 'distance':
-      currentTriggers = triggers.distance;
-      break;
-
-    case 'temperature':
-      currentTriggers = triggers.temperature;
-      break;
-
-    case 'light':
-      currentTriggers = triggers.light;
-      break;
-  }
-
   let columns = document.querySelectorAll('.trigger-panels .column:not(:first-of-type)');
 
   // Display all the current triggers for this sensor
@@ -630,6 +578,7 @@ function checkDevices() {
 //==================
 //  Utilities
 //==================
+// Generate a random integer within a range
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
