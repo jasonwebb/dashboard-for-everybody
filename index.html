@@ -7,11 +7,62 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="lib/bulma.min.css">
+  <link rel="stylesheet" href="dashboard/lib/bulma.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-  <a href="dashboard/">Dashboard</a>
+  <main class="container">
+    <div class="columns is-small">
+      <div class="column">
+        <div class="content">
+          <h1>A Dashboard for <u>Everybody!</u></h1>
+
+          <div class="content">
+            <h2>What is it?</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consequat justo eu augue rhoncus, vel suscipit sem auctor. In hendrerit, lectus in facilisis cursus, tortor purus dictum sem, sit amet dapibus metus neque sit amet turpis.</p>
+            
+            <h2>What ISN'T it?</h2>
+            <p>Sed vitae libero vehicula, sodales dolor id, pulvinar libero. Nullam sit amet dapibus purus. Fusce vehicula augue nec dictum posuere. Phasellus purus eros, commodo sit amet magna sit amet, aliquam scelerisque ipsum.</p>
+
+            <a href="dashboard/" class="button is-dark">Try the dashboard here</a>
+          </div>
+
+          <a href="dashboard/" class="hero-image">
+            <img src="media/dashboard-full-screenshot.png" alt="Screenshot of entire dashboard web application">
+          </a>
+
+            <hr class="is-dotted is-small">
+
+          <h2>Accessibility features</h2>
+          <ul>
+            <li><b>Fully operable</b> via keyboard <span class="fas fa-keyboard" aria-hidden="true"></span></li>
+            <li><b>Chart data</b> is available to users of screen readers through visually-hidden tables.</li>
+            <li>Important asynchronous information (like the availability of input and output devices) is <b>announced through live regions</b></li>
+            <li>All focusable and interactive elements have strong, consistent focus indicators</li>
+          </ul>
+
+            <hr class="is-dotted is-small">
+
+          <h2>Technical details</h2>
+
+          <h3>Dashboard UI</h3>
+          <ul>
+            <li><b>Vanilla ES6 JavaScript</b> for interactivity, logic, and DOM manipulation</li>
+            <li>Chart.js for live sensor data charts</li>
+            <li>Semantic HTML5</li>
+            <li>Gulp-based build system</li>
+            <li>Sass for styling</li>
+          </ul>
+
+          <h3>Input and output devices</h3>
+          <ul>
+            <li>Huzzah32 running Arduino</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
 </body>
 </html>
