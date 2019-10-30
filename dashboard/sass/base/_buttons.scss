@@ -5,6 +5,9 @@
   }
 
   &.is-info {
+    background-color: #1F7AB7;
+    color: #fff;
+
     &:focus,
     &:hover {
       box-shadow: 0 0 0 2px white, 0 0 0 5px hsl(204, 86%, 53%) !important;
@@ -12,9 +15,12 @@
   }
 
   &.is-danger {
+    background-color: #E4113B;
+
     &:focus,
     &:hover {
-      box-shadow: 0 0 0 2px white, 0 0 0 5px hsl(348, 100%, 61%) !important;
+      box-shadow: 0 0 0 2px white, 0 0 0 5px #E4113B !important;
+      color: #fff;
     }
   }
 }
