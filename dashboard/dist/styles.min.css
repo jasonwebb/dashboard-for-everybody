@@ -25,7 +25,7 @@ body {
   background-color: #efefef; }
   @media (max-width: 768px) {
     body {
-      padding: 0;
+      padding: 10px 0;
       min-height: 0; } }
 
 h2 {
@@ -137,7 +137,8 @@ h2 {
       font-size: 36px;
       text-align: center; }
     #highlights-panel .highlight .description {
-      font-size: 18px; }
+      font-size: 18px;
+      line-height: 20px; }
     #highlights-panel .highlight#pause-controls {
       padding: 0; }
       #highlights-panel .highlight#pause-controls button {
@@ -165,16 +166,21 @@ h2 {
   font-weight: bold;
   color: #209cee; }
 
+#add-trigger-panel fieldset {
+  width: 100%; }
+
 #add-trigger-panel input[type="number"] {
   width: 100px; }
   #add-trigger-panel input[type="number"]:focus {
     box-shadow: 0 0 0 2px #209cee; }
 
-#add-trigger-panel label:focus-within {
-  font-weight: bold;
-  color: #209cee; }
-  #add-trigger-panel label:focus-within input {
-    margin-right: 3px; }
+#add-trigger-panel label {
+  display: block; }
+  #add-trigger-panel label:focus-within {
+    font-weight: bold;
+    color: #209cee; }
+    #add-trigger-panel label:focus-within input {
+      margin-right: 3px; }
 
 #add-trigger-panel input[type="radio"]:before {
   content: '';
