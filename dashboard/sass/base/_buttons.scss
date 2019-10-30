@@ -5,13 +5,15 @@
   }
 
   &.is-info {
-    &:focus {
+    &:focus,
+    &:hover {
       box-shadow: 0 0 0 2px white, 0 0 0 5px hsl(204, 86%, 53%) !important;
     }
   }
 
   &.is-danger {
-    &:focus {
+    &:focus,
+    &:hover {
       box-shadow: 0 0 0 2px white, 0 0 0 5px hsl(348, 100%, 61%) !important;
     }
   }

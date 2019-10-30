@@ -48,10 +48,10 @@ h2 {
   text-decoration: underline;
   outline: 0; }
 
-.button.is-info:focus {
+.button.is-info:focus, .button.is-info:hover {
   box-shadow: 0 0 0 2px white, 0 0 0 5px #209cee !important; }
 
-.button.is-danger:focus {
+.button.is-danger:focus, .button.is-danger:hover {
   box-shadow: 0 0 0 2px white, 0 0 0 5px #ff3860 !important; }
 
 .panel {
