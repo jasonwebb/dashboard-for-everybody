@@ -9,11 +9,15 @@
     margin-bottom: 10px;
   }
 
-  .label {
+  .label {    
     &:focus-within {
       font-weight: bold;
       color: hsl(204, 86%, 53%);
     }
+  }
+
+  fieldset {
+    width: 100%;
   }
 
   input[type="number"] {
@@ -25,6 +29,8 @@
   }
 
   label {
+    display: block;
+
     &:focus-within { 
       font-weight: bold;
       color: hsl(204, 86%, 53%);
