@@ -147,19 +147,16 @@ window.addEventListener('DOMContentLoaded', function(e) {
 
     switch(currentSensor) {
       case 'distance':
-        currentTriggers = triggers.distance;
         currentSensorData = distanceData;
         resetDataTable();
         break;
 
       case 'temperature':
-        currentTriggers = triggers.temperature;
         currentSensorData = temperatureData;
         resetDataTable();
         break;
 
       case 'light':
-        currentTriggers = triggers.light;
         currentSensorData = lightData;
         resetDataTable();
         break;
