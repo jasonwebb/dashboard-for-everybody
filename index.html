@@ -17,30 +17,77 @@
     <div class="columns is-small">
       <div class="column">
         <div class="content">
-          <h1>A Dashboard for <u>Everybody!</u></h1>
+          <h1>
+            A Dashboard for <u>Everybody!</u>
+            <span class="fab fa-accessible-icon" aria-hidden="true"></span>
+          </h1>
 
           <div class="content">
             <h2>What is it?</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consequat justo eu augue rhoncus, vel suscipit sem auctor. In hendrerit, lectus in facilisis cursus, tortor purus dictum sem, sit amet dapibus metus neque sit amet turpis.</p>
+            <p>A small, speculative demo project that shows how real-time dashboards, like those used for <abbr title="Internet of Things">IoT</abbr> systems, can be enhanced using accessible design and development practices.</p>
+
+            <p>It is intended to be an educational resource providing accessible solutions for common UI/UX challenges found in dashboards, like dealing with charts, working with asynchronous data, and handling dynamic content.</p>
+            
+            <p>It was (mostly) built as part of <a href="https://www.meetup.com/iotfuse/events/264780943/" target="_blank">IoT HackDay 2019</a> in St. Paul, MN by <a href="https://www.linkedin.com/in/zenwebb/" target="_blank">Jason Webb</a> and <a href="https://www.linkedin.com/in/johnhaus/" target="_blank">John Haus</a>.</p>
             
             <h2>What ISN'T it?</h2>
-            <p>Sed vitae libero vehicula, sodales dolor id, pulvinar libero. Nullam sit amet dapibus purus. Fusce vehicula augue nec dictum posuere. Phasellus purus eros, commodo sit amet magna sit amet, aliquam scelerisque ipsum.</p>
+            <p>This is <em>not</em> a fully-functioning, ready-to-go system that can be used as-is to manage real IoT devices. Think of this more as a reference that you can point to when building your own dashboard to get some insights about enhancing it's accessibility.</p>
 
             <a href="dashboard/" class="button is-dark">Try the dashboard here</a>
           </div>
 
-          <a href="dashboard/" class="hero-image">
+          <a href="dashboard/" class="hero-image" title="Try the dashboard here!">
             <img src="media/dashboard-full-screenshot.png" alt="Screenshot of entire dashboard web application">
           </a>
 
             <hr class="is-dotted is-small">
 
           <h2>Accessibility features</h2>
-          <ul>
-            <li><b>Fully operable</b> via keyboard <span class="fas fa-keyboard" aria-hidden="true"></span></li>
-            <li><b>Chart data</b> is available to users of screen readers through visually-hidden tables.</li>
-            <li>Important asynchronous information (like the availability of input and output devices) is <b>announced through live regions</b></li>
-            <li>All focusable and interactive elements have strong, consistent focus indicators</li>
+          <ul class="has-no-bullets">
+            <li>
+              <div class="icon">
+                <span class="fas fa-keyboard" aria-hidden="true"></span>
+              </div>
+              <div class="text">
+                <b>Fully operable</b> via keyboard
+              </div>
+            </li>
+
+            <li>
+              <div class="icon">
+                <span class="fas fa-chart-line" aria-hidden="true"></span>
+              </div>
+              <div class="text">
+                <b>Chart data</b> is available to people using screen readers through visually-hidden tables.
+              </div>
+            </li>
+
+            <li>
+              <div class="icon">
+                <span class="fas fa-bullhorn" aria-hidden="true"></span>
+              </div>
+              <div class="text">
+                Important asynchronous information (like the availability of input and output devices) is <b>announced through live regions</b>
+              </div>
+            </li>
+
+            <li>
+              <div class="icon">
+                <span class="fas fa-highlighter" aria-hidden="true"></span>
+              </div>
+              <div class="text">
+                All focusable and interactive elements have strong, consistent <b>focus indicators</b>
+              </div>
+            </li>
+
+            <li>
+              <div class="icon">
+                <span class="fas fa-tasks" aria-hidden="true"></span>
+              </div>
+              <div class="text">
+                Meets <a href="https://www.w3.org/TR/WCAG20/" target="_blank">WCAG 2.0 (Level AA)</a> requirements
+              </div>
+            </li>
           </ul>
 
             <hr class="is-dotted is-small">
@@ -49,8 +96,9 @@
 
           <h3>Dashboard UI</h3>
           <ul>
-            <li><b>Vanilla ES6 JavaScript</b> for interactivity, logic, and DOM manipulation</li>
-            <li>Chart.js for live sensor data charts</li>
+            <li>Vanilla ES6 JavaScript for interactivity, logic, and DOM manipulation</li>
+            <li><a href="https://www.chartjs.org/" target="_blank">Chart.js</a> for live sensor data charts</li>
+            <li><a href="https://github.com/mqttjs/MQTT.js" target="_blank">MQTT.js</a> for communication with IoT-enabled input and output devices</li>
             <li>Semantic HTML5</li>
             <li>Gulp-based build system</li>
             <li>Sass for styling</li>
@@ -58,7 +106,47 @@
 
           <h3>Input and output devices</h3>
           <ul>
-            <li>Huzzah32 running Arduino</li>
+            <li>Huzzah32 dev boards for WiFi communications</li>
+            <li>Firmware written using the Arduino framework and IDE</li>
+            <li>PubSubClient library for MQTT messaging</li>
+          </ul>
+
+            <hr class="is-dotted is-small">
+
+          <h2>Get the source</h2>
+
+          <a href="https://github.com/jasonwebb/dashboard-for-everybody" target="_blank" class="button is-link">
+            <span class="icon is-medium">
+              <span class="fab fa-github"></span>
+            </span>
+            <span>Get the source on Github</span>
+          </a>
+
+            <hr class="is-dotted is-small">
+
+          <h2>Support</h2>
+          <p>Because this is meant to be more of a learning resource than a ready-to-go package, on-going development and support of this project will be very limited.</p>
+
+          <p>If you think of accessibility improvements that can be made, feel free to reach out to the project owner (Jason) and/or create a pull request on the source repository!</p>
+
+          <ul class="has-no-bullets is-compact">
+            <li>
+              <div class="icon">
+                <span class="fab fa-twitter" aria-hidden="true"></span>
+              </div>
+              <div class="text">
+                <a href="https://twitter.com/jasonwebb" target="_blank">@jasonwebb</a> on Twitter
+              </div>
+            </li>
+
+            <li>
+              <div class="icon">
+                <span class="fas fa-envelope" aria-hidden="true"></span>
+              </div>
+              <div class="text">
+                <a href="mailto:jwebb@accessible360.com" target="_blank">jwebb@accessible360.com</a>
+              </div>
+            </li>
           </ul>
         </div>
       </div>

@@ -3,27 +3,38 @@
 }
 
 body {
-  background-color: #efefef;
+  background-color: #f5f5f5;
   padding: 20px 10px;
 }
 
 .columns.is-small {
-  width: 700px;
+  width: 768px;
   margin: 0 auto;
 }
 
+p a,
+li a {
+  text-decoration: underline;
+}
+
+
+/*****************************
+  Global typography
+  =================
+  Headings, body text, etc
+******************************/
 h1 {
-  margin: 0;
+  margin: 0 0 60px 0 !important;
   padding: 0;
 
   font-size: 48px !important;
   font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
+  font-weight: 900;
   text-align: center;
 }
 
 h2 {
-  font-weight: bold !important;
+  font-weight: 900 !important;
   font-size: 24px !important;
 }
 
@@ -31,13 +42,25 @@ h2 {
     margin-top: 30px !important;
   }
 
+  p + h2,
+  ul + h2 {
+    margin-top: 50px !important;
+  }
+
 h3 {
   font-size: 18px !important;
+  font-weight: bold !important;
 }
 
+
+/*************************
+  Hero image
+  ==========
+  Large image spanning width of content, like a screenshot
+**************************/
 .hero-image {
   display: block;
-  margin: 0 auto;
+  margin: 60px auto 0 auto !important;
   position: relative;
 
   box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 0 20px 0 rgba(0,0,0,0.15);
@@ -79,6 +102,48 @@ h3 {
   font-size: 18px;
 }
 
+
+/****************************************
+  Lists with icons instead of bullets
+****************************************/
+ul.has-no-bullets {
+  list-style: none;
+  margin-left: 0;
+}
+
+  ul.has-no-bullets li {
+    display: flex;
+    padding: 7px;
+  }
+
+    ul.has-no-bullets li:first-of-type {
+      padding-top: 0;
+    }
+
+    ul.has-no-bullets li .icon {
+      font-size: 22px;
+      flex: 0 0 30px;
+      margin-right: 20px;
+      opacity: .4;
+      transition: opacity .2s ease-in-out;
+    }
+
+    ul.has-no-bullets li:hover .icon {
+      opacity: 1;
+    }
+
+  ul.has-no-bullets.is-compact li {
+    padding: 0;
+  }
+
+    ul.has-no-bullets.is-compact li .icon {
+      margin-right: 10px;
+    }
+
+
+/************************************
+  Dotted line separating sections
+************************************/
 hr {
   display: block;
   margin: 40px auto 40px auto;
