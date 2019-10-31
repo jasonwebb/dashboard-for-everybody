@@ -18,14 +18,16 @@ const int ledPin = 13;
 void setup() {
   Serial.begin(115200);
   // (you can also pass in a Wire library object like &Wire2)
-  //status = bme.begin();  
- 
+  //status = bme.begin();
+
   setup_wifi();
   client.setServer(mqtt_server, 1883);
 
   pinMode(ledPin, OUTPUT);
+  pinMode(12, OUTPUT);
   analogReadResolution(12);
   analogSetPinAttenuation(A2, ADC_11db);
+  client.setCallback(callback);
 }
 
 void setup_wifi() {
@@ -48,15 +50,30 @@ void setup_wifi() {
   Serial.println(WiFi.localIP());
 }
 
+void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.print("Message arrived [");
+  Serial.print(topic);
+  Serial.print("] ");
+  for (int i=0;i<length;i++) {
+    Serial.print((char)payload[i]);
+  }
+  Serial.println();
+  digitalWrite(12, HIGH);
+  digitalWrite(13, HIGH);
+  delay(500);
+  digitalWrite(12, LOW);
+  digitalWrite(13, LOW);
+}
+
 void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    if (client.connect("ESP32Client-")) {
+    if (client.connect("ESP32Client2-")) {
       Serial.println("connected");
       delay(5000);
       // Subscribe
-      client.subscribe("esp32/output");
+      client.subscribe("iothackday/dfe/output-device/motor");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -70,10 +87,6 @@ void loop() {
     reconnect();
   }
   client.loop();
-  int value = analogRead(32);
-  Serial.println(value);
-  client.publish("iothackday/dfe/sensor-device", "on");
-  client.publish("iothackday/dfe/sensor/distance", String(value).c_str());
-  Serial.println(value);
+  client.publish("iothackday/dfe/output-device", "on");
   delay(1000);
 }
