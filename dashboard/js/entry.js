@@ -170,7 +170,7 @@ window.addEventListener('DOMContentLoaded', function(e) {
   document.body.addEventListener('keydown', function(e) {
     if(e.key === ' ') {
       e.preventDefault();
-      // togglePauseControls();
+      isPaused = !isPaused;
     }
   });
 
