@@ -15,198 +15,196 @@
 <body>
   <h1 class="visually-hidden">A Dashboard for Everybody</h1>
 
-  <main>
-    <div class="container">
-      <!-- First row -->
-      <div class="columns">
-        <!-- Select a sensor to watch -->
-        <div class="column">
-          <div class="panel" id="device-selector">
-            <div class="field">
-              <label for="selected-sensor" class="label">Select sensor to watch:</label>
+  <main class="container">
+    <!-- First row -->
+    <div class="columns">
+      <!-- Select a sensor to watch -->
+      <div class="column">
+        <div class="panel" id="device-selector">
+          <div class="field">
+            <label for="selected-sensor" class="label">Select sensor to watch:</label>
 
-              <div class="control">
-                <div class="select">
-                  <select id="selected-sensor">
-                    <option value="distance">Distance</option>
-                    <option value="temperature">Temperature</option>
-                    <option value="light">Light</option>
-                  </select>
-                </div>
+            <div class="control">
+              <div class="select">
+                <select id="selected-sensor">
+                  <option value="distance">Distance</option>
+                  <option value="temperature">Temperature</option>
+                  <option value="light">Light</option>
+                </select>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Input device status -->
-        <div class="column">
-          <div class="panel device-status-panel" id="input-device-status" aria-live="polite">
-            <div class="connected status">Input device connected</div>
-            <div class="not-connected status is-visible">Input device not connected</div>
-          </div>
+      <!-- Input device status -->
+      <div class="column">
+        <div class="panel device-status-panel" id="input-device-status" aria-live="polite">
+          <div class="connected status">Input device connected</div>
+          <div class="not-connected status is-visible">Input device not connected</div>
         </div>
+      </div>
 
-        <!-- Output device status -->
-        <div class="column">
-          <div class="panel device-status-panel" id="output-device-status" aria-live="polite">
-            <div class="connected status">Output device connected</div>
-            <div class="not-connected status is-visible">Output device not connected</div>
+      <!-- Output device status -->
+      <div class="column">
+        <div class="panel device-status-panel" id="output-device-status" aria-live="polite">
+          <div class="connected status">Output device connected</div>
+          <div class="not-connected status is-visible">Output device not connected</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns">
+      <!-- Live sensor data chart and hidden table -->
+      <div class="column is-two-thirds">
+        <div class="panel" id="live-data">
+          <h2>Live sensor data</h2>
+
+          <!-- Chart.js chart -->
+          <div id="live-chart-container">
+            <canvas id="live-chart" height="100px" aria-hidden="true"></canvas>
+          </div>
+
+          <!-- Same data in table for screen reader users -->
+          <div id="sensor-data" class="visually-hidden">
+            <!-- <span >No sensor data available</span> -->
+
+            <table>
+              <caption>Last 50 sensor readings, sorted newest to oldest</caption>
+
+              <thead>
+                <tr>
+                  <th scope="col">Sensor value</th>
+                  <th scope="col">Timestamp</th>
+                </tr>
+              </thead>
+
+              <tbody></tbody>
+            </table>
           </div>
         </div>
       </div>
 
-      <div class="columns">
-        <!-- Live sensor data chart and hidden table -->
-        <div class="column is-two-thirds">
-          <div class="panel" id="live-data">
-            <h2>Live sensor data</h2>
-
-            <!-- Chart.js chart -->
-            <div id="live-chart-container">
-              <canvas id="live-chart" height="100px" aria-hidden="true"></canvas>
-            </div>
-
-            <!-- Same data in table for screen reader users -->
-            <div id="sensor-data" class="visually-hidden">
-              <!-- <span >No sensor data available</span> -->
-
-              <table>
-                <caption>Last 50 sensor readings, sorted newest to oldest</caption>
-
-                <thead>
-                  <tr>
-                    <th scope="col">Sensor value</th>
-                    <th scope="col">Timestamp</th>
-                  </tr>
-                </thead>
-
-                <tbody></tbody>
-              </table>
-            </div>
+      <div class="column">
+        <div class="panel" id="highlights-panel">
+          <div class="highlight" id="last-reading">
+            <div class="value">0</div>
+            <div class="description">most recent value</div>
           </div>
-        </div>
 
-        <div class="column">
-          <div class="panel" id="highlights-panel">
-            <div class="highlight" id="last-reading">
-              <div class="value">0</div>
-              <div class="description">most recent value</div>
-            </div>
-
-            <div class="highlight" id="readings-so-far">
-              <div class="value">0</div>
-              <div class="description">readings so far</div>
-            </div>
-
-            <div class="highlight" id="events-so-far">
-              <div class="value">0</div>
-              <div class="description">events so far</div>
-            </div>
-
-            <div class="highlight" id="triggers-set-up">
-              <div class="value">0</div>
-              <div class="description">triggers set up</div>
-            </div>
-
-            <!-- <div class="highlight" id="pause-controls" aria-live="assertive">
-              <button>
-                <div class="icons">
-                  <span class="pause-icon fa fa-pause" aria-hidden="true"></span>
-                  <span class="resume-icon fa fa-play is-hidden" aria-hidden="true"></span>
-                </div>
-
-                <div class="descriptions">
-                  <span class="pause-description description">Pause data collection</span>
-                  <span class="resume-description description is-hidden">Resume data collection</span>
-                </div>
-              </button>
-            </div> -->
+          <div class="highlight" id="readings-so-far">
+            <div class="value">0</div>
+            <div class="description">readings so far</div>
           </div>
+
+          <div class="highlight" id="events-so-far">
+            <div class="value">0</div>
+            <div class="description">events so far</div>
+          </div>
+
+          <div class="highlight" id="triggers-set-up">
+            <div class="value">0</div>
+            <div class="description">triggers set up</div>
+          </div>
+
+          <!-- <div class="highlight" id="pause-controls" aria-live="assertive">
+            <button>
+              <div class="icons">
+                <span class="pause-icon fa fa-pause" aria-hidden="true"></span>
+                <span class="resume-icon fa fa-play is-hidden" aria-hidden="true"></span>
+              </div>
+
+              <div class="descriptions">
+                <span class="pause-description description">Pause data collection</span>
+                <span class="resume-description description is-hidden">Resume data collection</span>
+              </div>
+            </button>
+          </div> -->
         </div>
       </div>
+    </div>
 
-      <div class="columns trigger-panels">
-        <!-- Trigger creation form -->
-        <div class="column">
-          <div class="panel" id="add-trigger-panel">
-            <h2>Create a new trigger</h2>
+    <div class="columns trigger-panels">
+      <!-- Trigger creation form -->
+      <div class="column">
+        <div class="panel" id="add-trigger-panel">
+          <h2>Create a new trigger</h2>
 
-            <form>
-              <div class="form-group">
-                <!-- "When data goes ..." radio button group -->
-                <div class="field is-grouped">
-                  <fieldset>
-                    <legend class="label">When data goes <span aria-hidden="true">...</span></legend>
-
-                    <div class="control">
-                      <label>
-                        <input type="radio" name="above-below" value="above" checked="checked">
-                        Above
-                      </label>
-                    </div>
-
-                    <div class="control">
-                      <label>
-                        <input type="radio" name="above-below" value="below">
-                        Below
-                      </label>
-                    </div>
-                  </fieldset>
-                </div>
-                <!-- /end "When data goes ..." radio button group -->
-
-                <!-- "This value" text input -->
-                <div class="field">
-                  <label for="threshold-value" class="label">This value:</label>
+          <form>
+            <div class="form-group">
+              <!-- "When data goes ..." radio button group -->
+              <div class="field is-grouped">
+                <fieldset>
+                  <legend class="label">When data goes <span aria-hidden="true">...</span></legend>
 
                   <div class="control">
-                    <input type="number" id="threshold-value" name="threshold-value" class="input" placeholder="500">
+                    <label>
+                      <input type="radio" name="above-below" value="above" checked="checked">
+                      Above
+                    </label>
                   </div>
+
+                  <div class="control">
+                    <label>
+                      <input type="radio" name="above-below" value="below">
+                      Below
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
+              <!-- /end "When data goes ..." radio button group -->
+
+              <!-- "This value" text input -->
+              <div class="field">
+                <label for="threshold-value" class="label">This value:</label>
+
+                <div class="control">
+                  <input type="number" id="threshold-value" name="threshold-value" class="input" placeholder="500">
                 </div>
               </div>
+            </div>
 
-              <!-- "Make the motor ..." radio button group -->
-              <div class="form-group">
-                <div class="field is-grouped">
-                  <fieldset>
-                    <legend class="label">Make the motor <span aria-hidden="true">...</span></legend>
+            <!-- "Make the motor ..." radio button group -->
+            <div class="form-group">
+              <div class="field is-grouped">
+                <fieldset>
+                  <legend class="label">Make the motor <span aria-hidden="true">...</span></legend>
 
-                    <div class="control">
-                      <label>
-                        <input type="radio" name="motor-action" value="pulse-once" checked="checked">
-                        Pulse once
-                      </label>
-                    </div>
+                  <div class="control">
+                    <label>
+                      <input type="radio" name="motor-action" value="pulse-once" checked="checked">
+                      Pulse once
+                    </label>
+                  </div>
 
-                    <div class="control">
-                      <label>
-                        <input type="radio" name="motor-action" value="pulse-three-times">
-                        Pulse three times
-                      </label>
-                    </div>
+                  <div class="control">
+                    <label>
+                      <input type="radio" name="motor-action" value="pulse-three-times">
+                      Pulse three times
+                    </label>
+                  </div>
 
-                    <div class="control">
-                      <label>
-                        <input type="radio" name="motor-action" value="turn-on-and-stay-on">
-                        Turn on and stay on
-                      </label>
-                    </div>
-                  </fieldset>
-                </div>
+                  <div class="control">
+                    <label>
+                      <input type="radio" name="motor-action" value="turn-on-and-stay-on">
+                      Turn on and stay on
+                    </label>
+                  </div>
+                </fieldset>
               </div>
-              <!-- /end "Make the motor ..." radio button group -->
+            </div>
+            <!-- /end "Make the motor ..." radio button group -->
 
-              <button type="submit" class="button is-info">Add trigger</button>
-            </form>
-          </div>
+            <button type="submit" class="button is-info">Add trigger</button>
+          </form>
         </div>
-        <!-- /end trigger creation form -->
-
-        <!-- Columns for triggers and placeholders -->
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
       </div>
+      <!-- /end trigger creation form -->
+
+      <!-- Columns for triggers and placeholders -->
+      <div class="column"></div>
+      <div class="column"></div>
+      <div class="column"></div>
     </div>
   </main>
 
