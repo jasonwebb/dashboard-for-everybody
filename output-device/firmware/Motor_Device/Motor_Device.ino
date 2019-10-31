@@ -1,79 +1,64 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
-#include <Wire.h>
 
 const char* ssid = "";
 const char* password = "";
 const char* mqtt_server = "test.mosquitto.org";
 
-WiFiClient espClient;
-PubSubClient client(espClient);
+WiFiClient wifiClient;
+PubSubClient client(wifiClient);
 long lastMsg = 0;
 char msg[50];
-int value = 0;
 
 // LED Pin
 const int ledPin = 13;
 
 void setup() {
+  // Set up the Serial connection
   Serial.begin(115200);
-  // (you can also pass in a Wire library object like &Wire2)
-  //status = bme.begin();
 
+  // Set up the WiFi connection
   setup_wifi();
+
+  // Set up the MQTT connection
   client.setServer(mqtt_server, 1883);
 
-  pinMode(ledPin, OUTPUT);
-  pinMode(12, OUTPUT);
-  analogReadResolution(12);
-  analogSetPinAttenuation(A2, ADC_11db);
-  client.setCallback(callback);
+  // Point MQTT client to internal function to process messages when they are received
+  client.setCallback(processMQTTMessages);
 }
 
 void setup_wifi() {
   delay(10);
-  // We start by connecting to a WiFi network
+
+  // Announce start of program over Serial for debugging
   Serial.println();
   Serial.print("Connecting to ");
   Serial.println(ssid);
 
+  // Attempt to connect to WiFi using SSID and password set earlier
   WiFi.begin(ssid, password);
 
+  // If unsuccessful, continuing attempting to connect every 2.5s
   while (WiFi.status() != WL_CONNECTED) {
     delay(2500);
     Serial.println(WiFi.status());
   }
 
+  // When successful, output a message and our IP address over Serial
   Serial.println("");
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
 }
 
-void callback(char* topic, byte* payload, unsigned int length) {
-  Serial.print("Message arrived [");
-  Serial.print(topic);
-  Serial.print("] ");
-  for (int i=0;i<length;i++) {
-    Serial.print((char)payload[i]);
-  }
-  Serial.println();
-  digitalWrite(12, HIGH);
-  digitalWrite(13, HIGH);
-  delay(500);
-  digitalWrite(12, LOW);
-  digitalWrite(13, LOW);
-}
-
 void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
+
     // Attempt to connect
-    if (client.connect("ESP32Client2-")) {
+    if (client.connect("SensorDevice")) {
       Serial.println("connected");
-      delay(5000);
-      // Subscribe
-      client.subscribe("iothackday/dfe/output-device/motor");
+
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -82,11 +67,42 @@ void reconnect() {
     }
   }
 }
+
+void callback(char* topic, byte* payload, unsigned int length) {
+  // Output message received along with it's topic to Serial for debugging
+  Serial.print("Message arrived [");
+  Serial.print(topic);
+  Serial.print("] ");
+
+  for (int i = 0; i < length; i++) {
+    Serial.print((char)payload[i]);
+  }
+
+  Serial.println();
+
+  // TODO: validate the topic to make sure its what we expect
+
+  digitalWrite(12, HIGH);  // turn on motor
+  digitalWrite(13, HIGH);  // turn on on-board LED
+
+  delay(500);  // keep motor and LED on for a bit
+
+  digitalWrite(12, LOW);  // turn off motor
+  digitalWrite(13, LOW);  // turn off on-board LED
+}
+
 void loop() {
+  // Reconnect to MQTT broker if dropped
   if (!client.connected()) {
     reconnect();
   }
+
+  // Let the MQTT client run it's internal loop
   client.loop();
+
+  // Send keep-alive message so dashboard knows we're still connected
   client.publish("iothackday/dfe/output-device", "on");
-  delay(1000);
+
+  // Wait for a little bit to cut down on amount of data
+  delay(100);
 }
