@@ -4,7 +4,7 @@
 
 body {
   background-color: #f5f5f5;
-  padding: 20px 10px;
+  padding: 20px 10px 60px 10px;
 }
 
 .columns.is-small {
@@ -16,6 +16,12 @@ p a,
 li a {
   text-decoration: underline;
 }
+
+  p a:focus,
+  li a:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #f5f5f5, 0 0 0 5px hsl(204, 86%, 53%);
+  }
 
 
 /*****************************
@@ -50,7 +56,47 @@ h2 {
 h3 {
   font-size: 18px !important;
   font-weight: bold !important;
+  margin-top: 30px !important;
 }
+
+
+/*************
+  Buttons
+*************/
+
+p + .button {
+  margin-top: 20px;
+}
+
+.button {
+  transition: box-shadow .2s ease-in-out;
+}
+
+  .button:hover {
+    text-decoration: underline;
+  }
+
+  .button.has-icon:hover {
+    text-decoration: none !important;
+  }
+
+    .button.has-icon:hover .icon + span {
+      text-decoration: underline;
+    }
+
+    .button.is-centered {
+      margin: 0 auto;
+      display: block;
+      width: 250px;
+    }
+
+    .button.is-dark:focus {
+      box-shadow: 0 0 0 3px #f5f5f5, 0 0 0 6px hsl(0, 0%, 21%) !important;
+    }
+
+    .button.is-link:focus {
+      box-shadow: 0 0 0 3px #f5f5f5, 0 0 0 6px hsl(217, 71%, 53%) !important;
+    }
 
 
 /*************************
@@ -146,7 +192,7 @@ ul.has-no-bullets {
 ************************************/
 hr {
   display: block;
-  margin: 40px auto 40px auto;
+  margin: 60px auto 60px auto;
   border: 0;
   border-top: 10px solid rgba(0,0,0,.1);
   background: none;
