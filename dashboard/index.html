@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Dashboard for Everybody</title>
+  <title>A Dashboard for Everybody!</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  <h1 class="visually-hidden">A Dashboard for Everybody</h1>
+  <h1 class="visually-hidden">A Dashboard for Everybody!</h1>
 
   <div class="notice">
     <div class="container">All of the data you see in this dashboard is <b>fake</b>. Press the <code class="key">Space</code> key to pause</div>
@@ -25,6 +25,8 @@
       <!-- Select a sensor to watch -->
       <div class="column is-one-quarter">
         <div class="panel" id="device-selector">
+          <h2 class="visually-hidden">Sensor selection</h2>
+
           <div class="field">
             <label for="selected-sensor" class="label">Select sensor to watch:</label>
 
@@ -44,19 +46,25 @@
       <!-- Controls for pausing/resuming and changing interval of data display -->
       <div class="column is-one-quarter">
         <div class="panel" id="flow-controls">
+          <h2 class="visually-hidden">Data display controls</h2>
+
           <!-- Pause/resume button-->
           <div class="field">
-            <div class="label">Pause/resume</div>
-
             <button class="flow-control-button">
               <div class="pause-contents">
-                <span class="fas fa-pause" aria-hidden="true"></span>
-                <span class="visually-hidden">Pause data collection</span>
+                <span class="description">
+                  Pause
+                  <span class="visually-hidden"> display of live data</span>
+                </span>
+                <span class="icon fas fa-pause" aria-hidden="true"></span>
               </div>
               
               <div class="resume-contents is-hidden">
-                <span class="fas fa-play" aria-hidden="true"></span>
-                <span class="visually-hidden">Resume data collection</span>
+                <span class="description">
+                  Resume
+                  <span class="visually-hidden"> display of live data</span>
+                </span>
+                <span class="icon fas fa-play" aria-hidden="true"></span>
               </div>
             </button>
           </div>
@@ -82,6 +90,7 @@
       <!-- Input device status -->
       <div class="column">
         <div class="panel device-status-panel" id="input-device-status" aria-live="polite">
+          <h2 class="visually-hidden">Input device status</h2>
           <div class="connected status">Input device connected</div>
           <div class="not-connected status is-visible">Input device not connected</div>
         </div>
@@ -90,6 +99,7 @@
       <!-- Output device status -->
       <div class="column">
         <div class="panel device-status-panel" id="output-device-status" aria-live="polite">
+          <h2 class="visually-hidden">Output device status</h2>
           <div class="connected status">Output device connected</div>
           <div class="not-connected status is-visible">Output device not connected</div>
         </div>
