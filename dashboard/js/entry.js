@@ -597,7 +597,6 @@ function displayTriggers() {
   currentTriggers.forEach(function(trigger, index) {
     columns[index].innerHTML = '';
     columns[index].appendChild(trigger);
-    trigger.focus();
 
     let removeButtons = trigger.querySelectorAll('.remove-button');
     removeButtons.forEach((removeButton) => {
