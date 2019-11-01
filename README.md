@@ -1,5 +1,5 @@
----
-Check out the [documentation page for this project](https://jasonwebb.github.io/dashboard-for-everybody/).
+Check out the [documentation page for this project](https://jasonwebb.github.io/dashboard-for-everybody/)!
+
 ---
 
 **A Dashboard for Everybody** is a small, speculative demo project that shows how real-time dashboards, like those used for IoT systems, can be enhanced using accessible design and development practices.
@@ -11,12 +11,12 @@ It was (mostly) built as part of [IoT HackDay 2019](https://www.meetup.com/iotfu
 
 ## Accessibility features
 
-* Fully operable via keyboard
-* Chart data is available to people using screen readers through visually-hidden tables.
-* Important asynchronous information (like the availability of input and output devices) is announced through live regions
-* All focusable and interactive elements have strong, consistent focus indicators
-* Meets WCAG 2.0 (Level AA) requirements
-* Works great on mobile devices and tablets, which are very popular among people with motor and visual conditions
+* **Fully operable** via keyboard
+* **Chart data** is available to people using screen readers through visually-hidden tables.
+* Important asynchronous information (like the availability of input and output devices) is **announced through live regions**
+* All focusable and interactive elements have strong, consistent **focus indicators**
+* Meets [WCAG 2.0 (Level AA)](https://www.w3.org/TR/WCAG20/) requirements
+* Works great on **mobile devices and tablets**, which are very popular among people with motor and visual conditions
 
 
 ## Technical details
@@ -49,3 +49,7 @@ For demo purposes during the IoT HackDay event we put together two real IoT-enab
 1. Uses [Adafruit Huzzah32 board](https://learn.adafruit.com/adafruit-huzzah32-esp32-feather)
 2. Receives requests for motor movement via MQTT subscribe messages
 3. Controls motors by generating PWM signal based on MQTT messages
+
+## Demo
+
+[![Live demo of Dashboard for Everybody](http://img.youtube.com/vi/i7LSeKJyNso/0.jpg)](https://www.youtube.com/watch?v=i7LSeKJyNso "Live demo of Dashboard for Everybody")
