@@ -8,6 +8,10 @@ let client = mqtt.connect('wss://test.mosquitto.org:8081');
 // Pause control for data collection
 let isPaused = false;
 
+// Data display interval (allow users to "slow down" data stream)
+let displayInterval = 100;
+let lastDisplayUpdate = Date.now();
+
 // MQTT topics
 const inputDeviceStatusTopic = 'iothackday/dfe/input-device';
 const outputDeviceStatusTopic = 'iothackday/dfe/output-device';
@@ -25,8 +29,10 @@ let inputLastPing = Date.now();
 let outputLastPing = Date.now();
 let keepAliveThreshold = 1000;
 
-// DOM elements
+// Important DOM elements
 let inputSensorSelectedEl = document.getElementById('selected-sensor');
+let pauseButtonEl = document.querySelector('#flow-controls .flow-control-button');
+let displayIntervalEl = document.getElementById('interval-selector');
 let inputDeviceStatusEl = document.getElementById('input-device-status');
 let outputDeviceStatusEl = document.getElementById('output-device-status');
 
@@ -166,6 +172,15 @@ window.addEventListener('DOMContentLoaded', function(e) {
     displayTriggerCount();
   });
 
+  pauseButtonEl.addEventListener('click', function(e) {
+    // Toggle pause
+  });
+
+  // Update global display interval value when select element is changed
+  displayIntervalEl.addEventListener('change', function(e) {
+    displayInterval = parseInt(e.target.value);
+  });
+
   // Toggle mock data using 'Space'
   document.body.addEventListener('keydown', function(e) {
     if(e.key === ' ') {
@@ -300,37 +315,44 @@ function processMessages(topic, message) {
       dataObject.labels = currentSensorData.labels;
       dataObject.datasets[0].data = currentSensorData.data;
 
-      // Re-initialize chart to display new data
-      liveChart = new Chart(chartCanvasEl, {
-        type: 'line',
-        data: dataObject,
-        options: optionsObject
-      });
+      // Only refresh the UI at the interval requested by the user
+      if(Date.now() > lastDisplayUpdate + displayInterval) {
 
-      // Create new row in visually-hidden data table
-      let row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${nextValue}</td>
-        <td>${new Date()}</td>
-      `;
+        // Re-initialize chart to display new data
+        liveChart = new Chart(chartCanvasEl, {
+          type: 'line',
+          data: dataObject,
+          options: optionsObject
+        });
 
-      let tbody = document.querySelector('#sensor-data tbody');
-      let firstRow = tbody.querySelector('tr');
+        // Create new row in visually-hidden data table
+        let row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${nextValue}</td>
+          <td>${new Date()}</td>
+        `;
 
-      // Insert new row into the data table
-      if(firstRow == undefined) {
-        tbody.append(row);
-      } else {
-        tbody.insertBefore(row, firstRow);
+        let tbody = document.querySelector('#sensor-data tbody');
+        let firstRow = tbody.querySelector('tr');
+
+        // Insert new row into the data table
+        if(firstRow == undefined) {
+          tbody.append(row);
+        } else {
+          tbody.insertBefore(row, firstRow);
+        }
+
+        // Remove oldest sensor reading when maximum threshold reached
+        if(tbody.children.length >= maxReadings) {
+          tbody.children[tbody.children.length - 1].remove();
+        }
+
+        // Display this new sensor value on the "last reading" highlight block
+        displaySensorReading();
+
+        // Update last display refresh timestamp
+        lastDisplayUpdate = Date.now();
       }
-
-      // Remove oldest sensor reading when maximum threshold reached
-      if(tbody.children.length >= maxReadings) {
-        tbody.children[tbody.children.length - 1].remove();
-      }
-
-      // Display this new sensor value on the "last reading" highlight block
-      displaySensorReading();
 
       // Add to total reading count for this sensor
       switch(currentSensor) {

@@ -1,0 +1,28 @@
+#flow-controls {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 15px 20px;
+
+  .field {
+    height: 100%;
+
+    &:first-of-type {
+      border-right: 1px solid rgba(0,0,0,.2);
+      padding-right: 30px;
+    }
+  }
+
+  .flow-control-button {
+    background: none;
+    border: 0;
+    padding: 0;
+
+    width: 100%;
+    height: 30px;
+
+    font-size: 24px;
+    line-height: 20px;
+    text-align: center;
+  }
+}

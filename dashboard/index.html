@@ -20,10 +20,10 @@
   </div>
 
   <main class="container">
-    <!-- First row -->
     <div class="columns">
+
       <!-- Select a sensor to watch -->
-      <div class="column">
+      <div class="column is-one-quarter">
         <div class="panel" id="device-selector">
           <div class="field">
             <label for="selected-sensor" class="label">Select sensor to watch:</label>
@@ -34,6 +34,44 @@
                   <option value="distance">Distance</option>
                   <option value="temperature">Temperature</option>
                   <option value="light">Light</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls for pausing/resuming and changing interval of data display -->
+      <div class="column is-one-quarter">
+        <div class="panel" id="flow-controls">
+          <!-- Pause/resume button-->
+          <div class="field">
+            <div class="label">Pause/resume</div>
+
+            <button class="flow-control-button">
+              <div class="pause-contents">
+                <span class="pause-icon fas fa-pause" aria-hidden="true"></span>
+                <span class="visually-hidden">Pause data collection</span>
+              </div>
+              
+              <div class="resume-contents is-hidden">
+                <span class="resume-icon fas fa-play" aria-hidden="true"></span>
+                <span class="visually-hidden">Resume data collection</span>
+              </div>
+            </button>
+          </div>
+
+          <!-- Interval select dropdown -->
+          <div class="field">
+            <label for="interval" class="label">Display interval</label>
+
+            <div class="control">
+              <div class="select">
+                <select id="interval-selector">
+                  <option value="100">100ms</option>
+                  <option value="500">500ms</option>
+                  <option value="1000">1s</option>
+                  <option value="3000">3s</option>
                 </select>
               </div>
             </div>
@@ -71,8 +109,6 @@
 
           <!-- Same data in table for screen reader users -->
           <div id="sensor-data" class="visually-hidden">
-            <!-- <span >No sensor data available</span> -->
-
             <table>
               <caption>Last 50 sensor readings, sorted newest to oldest</caption>
 
@@ -91,39 +127,29 @@
 
       <div class="column">
         <div class="panel" id="highlights-panel">
-          <div class="highlight" id="last-reading">
-            <div class="value">0</div>
-            <div class="description">most recent value</div>
+          <h2>Data highlights</h2>
+
+          <div class="highlights">
+            <div class="highlight" id="last-reading">
+              <div class="value">0</div>
+              <div class="description">most recent value</div>
+            </div>
+
+            <div class="highlight" id="readings-so-far">
+              <div class="value">0</div>
+              <div class="description">readings so far</div>
+            </div>
+
+            <div class="highlight" id="events-so-far">
+              <div class="value">0</div>
+              <div class="description">events so far</div>
+            </div>
+
+            <div class="highlight" id="triggers-set-up">
+              <div class="value">0</div>
+              <div class="description">triggers set up</div>
+            </div>
           </div>
-
-          <div class="highlight" id="readings-so-far">
-            <div class="value">0</div>
-            <div class="description">readings so far</div>
-          </div>
-
-          <div class="highlight" id="events-so-far">
-            <div class="value">0</div>
-            <div class="description">events so far</div>
-          </div>
-
-          <div class="highlight" id="triggers-set-up">
-            <div class="value">0</div>
-            <div class="description">triggers set up</div>
-          </div>
-
-          <!-- <div class="highlight" id="pause-controls" aria-live="assertive">
-            <button>
-              <div class="icons">
-                <span class="pause-icon fa fa-pause" aria-hidden="true"></span>
-                <span class="resume-icon fa fa-play is-hidden" aria-hidden="true"></span>
-              </div>
-
-              <div class="descriptions">
-                <span class="pause-description description">Pause data collection</span>
-                <span class="resume-description description is-hidden">Resume data collection</span>
-              </div>
-            </button>
-          </div> -->
         </div>
       </div>
     </div>

@@ -66,6 +66,10 @@ h2 {
     box-shadow: 0 0 0 2px white, 0 0 0 5px #E4113B !important;
     color: #fff; }
 
+.select select:focus {
+  box-shadow: 0 0 0 2px #209cee;
+  outline: none; }
+
 .panel {
   background-color: white;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15);
@@ -76,24 +80,33 @@ h2 {
   @media (max-width: 768px) {
     .panel {
       padding: 15px; } }
+  .panel:focus-within {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5), 0 0 20px 0 rgba(0, 0, 0, 0.15); }
 
 .panel-placeholder {
   height: 100%; }
 
-#device-selector:focus-within {
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5), 0 0 20px 0 rgba(0, 0, 0, 0.15); }
+#device-selector {
+  padding: 15px 20px; }
 
-#device-selector .field {
+#flow-controls {
   display: flex;
-  align-items: center; }
-  #device-selector .field .label {
-    display: inline-block; }
-  #device-selector .field .control {
-    display: inline-block;
-    margin-left: 20px; }
-    #device-selector .field .control select:focus {
-      box-shadow: 0 0 0 2px #209cee;
-      outline: none; }
+  justify-content: space-between;
+  padding: 15px 20px; }
+  #flow-controls .field {
+    height: 100%; }
+    #flow-controls .field:first-of-type {
+      border-right: 1px solid rgba(0, 0, 0, 0.2);
+      padding-right: 30px; }
+  #flow-controls .flow-control-button {
+    background: none;
+    border: 0;
+    padding: 0;
+    width: 100%;
+    height: 30px;
+    font-size: 24px;
+    line-height: 20px;
+    text-align: center; }
 
 .device-status-panel {
   padding: 5px; }
@@ -116,11 +129,12 @@ h2 {
     background-color: #ff3860;
     color: white; }
 
-#highlights-panel {
+#highlights-panel .highlights {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap; }
-  #highlights-panel .highlight {
+  flex-wrap: wrap;
+  height: calc(100% - 35px); }
+  #highlights-panel .highlights .highlight {
     flex: 0 0 calc(50% - 10px);
     background-color: rgba(0, 0, 0, 0.05);
     display: flex;
@@ -129,9 +143,9 @@ h2 {
     flex-direction: column;
     padding: 0 20px;
     margin-bottom: 0; }
-    #highlights-panel .highlight:nth-of-type(1), #highlights-panel .highlight:nth-of-type(2) {
+    #highlights-panel .highlights .highlight:nth-of-type(1), #highlights-panel .highlights .highlight:nth-of-type(2) {
       margin-bottom: 1.5rem; }
-    #highlights-panel .highlight .value {
+    #highlights-panel .highlights .highlight .value {
       width: 100%;
       background: none;
       padding: 0;
@@ -139,21 +153,21 @@ h2 {
       font-weight: bold;
       font-size: 36px;
       text-align: center; }
-    #highlights-panel .highlight .description {
+    #highlights-panel .highlights .highlight .description {
       font-size: 18px;
       line-height: 20px; }
-    #highlights-panel .highlight#pause-controls {
+    #highlights-panel .highlights .highlight#pause-controls {
       padding: 0; }
-      #highlights-panel .highlight#pause-controls button {
+      #highlights-panel .highlights .highlight#pause-controls button {
         border: 0;
         background: none;
         padding: 0 20px;
         height: 100%;
         cursor: pointer; }
-        #highlights-panel .highlight#pause-controls button:focus {
+        #highlights-panel .highlights .highlight#pause-controls button:focus {
           outline: none;
           box-shadow: inset 0 0 0 4px #209cee; }
-        #highlights-panel .highlight#pause-controls button .icons {
+        #highlights-panel .highlights .highlight#pause-controls button .icons {
           font-size: 32px;
           margin-bottom: 10px; }
 
