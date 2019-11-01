@@ -6,9 +6,15 @@
 
   .field {
     height: 100%;
+    flex: 1 1 50%;
+
+    &:last-of-type {
+      padding-left: 15px;
+    }
   }
 
   .flow-control-button {
+    flex: 1 0 auto;
     background: rgba(0,0,0,.1);
     border: 0;
     border-radius: 3px;
@@ -16,7 +22,7 @@
     display: block;
     text-align: center;
 
-    width: 150px;
+    width: 100%;
     height: 100%;
 
     &:hover {

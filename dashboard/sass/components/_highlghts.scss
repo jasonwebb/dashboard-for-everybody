@@ -18,6 +18,14 @@
       padding: 0 20px;
       margin-bottom: 0;
 
+      @media screen and (max-width: 1024px) {
+        padding: 5px;
+      }
+
+      @media screen and (max-width: 768px) {
+        padding: 10px;
+      }
+
       &:nth-of-type(1),
       &:nth-of-type(2) {
         margin-bottom: 1.5rem;
@@ -31,11 +39,19 @@
         font-weight: bold;
         font-size: 36px;
         text-align: center;
+
+        @media screen and (max-width: 1280px) {
+          font-size: 24px;
+        }
       }
 
       .description {
         font-size: 18px;
         line-height: 20px;
+
+        @media screen and (max-width: 1333px) {
+          text-align: center;
+        }
       }
 
       &#pause-controls {

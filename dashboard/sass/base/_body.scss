@@ -8,11 +8,7 @@ body {
   background-color: #efefef;
 
   @media (max-width: $mobile-breakpoint) {
-    padding: 90px 0 10px 0;
+    padding: 60px 0 10px 0;
     min-height: 0;
-  }
-
-  @media (max-width: 381px) {
-    padding: 120px 0 10px 0;
   }
 }
