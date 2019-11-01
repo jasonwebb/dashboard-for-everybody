@@ -25,8 +25,11 @@ body {
   background-color: #efefef; }
   @media (max-width: 768px) {
     body {
-      padding: 10px 0;
+      padding: 90px 0 10px 0;
       min-height: 0; } }
+  @media (max-width: 381px) {
+    body {
+      padding: 120px 0 10px 0; } }
 
 h2 {
   font-weight: bold;
@@ -280,6 +283,9 @@ h2 {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   text-align: center;
   font-size: 18px; }
+  @media (max-width: 768px) {
+    .notice {
+      padding: 15px; } }
 
 .key {
   border: 1px solid rgba(0, 0, 0, 0.2);

@@ -11,4 +11,8 @@
 
   text-align: center;
   font-size: 18px;
+
+  @media (max-width: 768px) {
+    padding: 15px;
+  }
 }
