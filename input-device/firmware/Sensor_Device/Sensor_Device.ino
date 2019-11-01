@@ -71,7 +71,7 @@ void loop() {
   client.loop();
 
   // Send keep-alive message so dashboard knows we're still connected
-  client.publish("iothackday/dfe/sensor-device", "on");
+  client.publish("iothackday/dfe/sensor-device", "online");
 
   // Take a reading from the sensor and publish an MQTT message with its value
   int value = analogRead(32);

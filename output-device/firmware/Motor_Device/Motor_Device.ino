@@ -10,9 +10,6 @@ PubSubClient client(wifiClient);
 long lastMsg = 0;
 char msg[50];
 
-// LED Pin
-const int ledPin = 13;
-
 void setup() {
   // Set up the Serial connection
   Serial.begin(115200);
@@ -101,7 +98,7 @@ void loop() {
   client.loop();
 
   // Send keep-alive message so dashboard knows we're still connected
-  client.publish("iothackday/dfe/output-device", "on");
+  client.publish("iothackday/dfe/output-device", "online");
 
   // Wait for a little bit to cut down on amount of data
   delay(100);
