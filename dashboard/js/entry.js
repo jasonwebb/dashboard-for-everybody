@@ -174,9 +174,6 @@ window.addEventListener('DOMContentLoaded', function(e) {
     }
   });
 
-  // Make "pause" button toggle live data collection
-  // document.querySelector('#pause-controls button').addEventListener('click', togglePauseControls);
-
   // Render any pre-defined triggers, or just placeholders if there are none
   displayTriggers();
 });
@@ -263,7 +260,7 @@ if(!mockDataEnabled) {
 
 
 //==========================================================
-//  Process data messages coming from live input device 
+//  Process data messages coming from live input device
 //  or mock data loops
 //==========================================================
 // Act on messages from devices or mock data events
@@ -393,7 +390,7 @@ function resetDataTable() {
 
 
 //======================================================
-//  Display live data in the "highlight" blocks next 
+//  Display live data in the "highlight" blocks next
 //  to the live chart
 //======================================================
 // Display the number of triggers set up for this sensor
@@ -653,28 +650,3 @@ function getRandomInt(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
 }
-
-
-// function togglePauseControls() {
-//   isPaused = !isPaused;
-
-//   let pauseButton = document.querySelector('#pause-controls button');
-//   let pauseIcon = pauseButton.querySelector('.pause-icon');
-//   let resumeIcon = pauseButton.querySelector('.resume-icon');
-//   let pauseDescription = pauseButton.querySelector('.pause-description');
-//   let resumeDescription = pauseButton.querySelector('.resume-description');
-
-//   if(!isPaused) {
-//     pauseIcon.classList.remove('is-hidden');
-//     pauseDescription.classList.remove('is-hidden');
-
-//     resumeIcon.classList.add('is-hidden');
-//     resumeDescription.classList.add('is-hidden');
-//   } else {
-//     pauseIcon.classList.add('is-hidden');
-//     pauseDescription.classList.add('is-hidden');
-
-//     resumeIcon.classList.remove('is-hidden');
-//     resumeDescription.classList.remove('is-hidden');
-//   }
-// }
