@@ -172,8 +172,20 @@ window.addEventListener('DOMContentLoaded', function(e) {
     displayTriggerCount();
   });
 
+  // Toggle pause state of data display when pause/resume button is activated
   pauseButtonEl.addEventListener('click', function(e) {
-    // Toggle pause
+    isPaused = !isPaused;
+
+    let pauseContents = pauseButtonEl.querySelector('.pause-contents');
+    let resumeContents = pauseButtonEl.querySelector('.resume-contents');
+
+    if(!isPaused) {
+      pauseContents.classList.remove('is-hidden');
+      resumeContents.classList.add('is-hidden');
+    } else {
+      pauseContents.classList.add('is-hidden');
+      resumeContents.classList.remove('is-hidden');
+    }
   });
 
   // Update global display interval value when select element is changed
@@ -215,7 +227,7 @@ if(mockDataEnabled) {
 
 // Generate random data for the active sensor, if the input device is online
 function createMockInputData() {
-  if(inputDeviceOnline && mockDataEnabled && !isPaused) {
+  if(inputDeviceOnline && mockDataEnabled) {
     if(mockDataCurrent != mockDataTarget) {
       if(mockDataCurrent + mockDataVelocity < mockDataTarget) {
         mockDataCurrent += mockDataVelocity;
@@ -245,7 +257,7 @@ function createMockInputData() {
 
 // Generate fake "keep alive" messages as though devices were online
 function createMockKeepAliveMessages() {
-  if(mockDataEnabled && !isPaused) {
+  if(mockDataEnabled) {
     processMessages(inputDeviceStatusTopic, 'online');
     processMessages(outputDeviceStatusTopic, 'online');
   }
@@ -316,7 +328,7 @@ function processMessages(topic, message) {
       dataObject.datasets[0].data = currentSensorData.data;
 
       // Only refresh the UI at the interval requested by the user
-      if(Date.now() > lastDisplayUpdate + displayInterval) {
+      if(Date.now() > lastDisplayUpdate + displayInterval && !isPaused) {
 
         // Re-initialize chart to display new data
         liveChart = new Chart(chartCanvasEl, {
