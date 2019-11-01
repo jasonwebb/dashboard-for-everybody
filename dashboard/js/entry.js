@@ -511,6 +511,7 @@ function addNewTrigger(e) {
     // Create a new trigger for this sensor from the form data
     let newTriggerEl = document.createElement('div');
     newTriggerEl.classList = 'panel trigger is-blue';
+    newTriggerEl.setAttribute('role', 'group');
 
     newTriggerEl.innerHTML = `
       <h2>
@@ -590,7 +591,7 @@ function displayTriggers() {
       break;
   }
 
-  let columns = document.querySelectorAll('.trigger-panels .column:not(:first-of-type)');
+  let columns = document.querySelectorAll('#current-triggers .column');
 
   // Display all the current triggers for this sensor
   currentTriggers.forEach(function(trigger, index) {
