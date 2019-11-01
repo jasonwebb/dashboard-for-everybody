@@ -2,6 +2,10 @@ Check out the [documentation page for this project](https://jasonwebb.github.io/
 
 ---
 
+[![Screenshot of dashboard](media/dashboard-full-screenshot.png)](https://jasonwebb.github.io/dashboard-for-everybody/)
+
+---
+
 **A Dashboard for Everybody** is a small, speculative demo project that shows how real-time dashboards, like those used for IoT systems, can be enhanced using accessible design and development practices.
 
 It is intended to be an educational resource providing accessible solutions for common UI/UX challenges found in dashboards, like dealing with charts, working with asynchronous data, and handling dynamic content.
