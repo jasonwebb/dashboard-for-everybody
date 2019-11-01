@@ -1,0 +1,8 @@
+.select {
+  select {
+    &:focus {
+      box-shadow: 0 0 0 2px hsl(204, 86%, 53%);
+      outline: none;
+    }
+  }
+}
