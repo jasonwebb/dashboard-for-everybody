@@ -68,6 +68,10 @@ p + .button {
   margin-top: 20px;
 }
 
+.buttons .button:first-of-type {
+  margin-right: 20px !important;
+}
+
 .button {
   transition: box-shadow .2s ease-in-out;
 }
@@ -82,12 +86,6 @@ p + .button {
 
     .button.has-icon:hover .icon + span {
       text-decoration: underline;
-    }
-
-    .button.is-centered {
-      margin: 0 auto;
-      display: block;
-      width: 250px;
     }
 
     .button.is-dark:focus {
@@ -129,7 +127,7 @@ p + .button {
     .hero-image:focus {
       outline: 0;
     }
-    
+
       .hero-image:focus:after,
       .hero-image:hover:after {
         outline: 0;
