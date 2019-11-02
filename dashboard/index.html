@@ -13,8 +13,10 @@
 </head>
 
 <body>
+  <!-- Every page should have exactly one h1, even if it has to be visually hidden. This helps screen reader users to navigate, and has SEO benefits -->
   <h1 class="visually-hidden">A Dashboard for Everybody!</h1>
 
+  <!-- Sometimes, though very rarely, the UI changes in ways that may be unintuitive for screen reader users (like when adding or removing triggers). Changes to the contents of this element are announced immediately to screen readers, but hidden from sighted users. -->
   <div class="visually-hidden" id="screen-reader-announcements" aria-live="assertive"></div>
 
   <div class="notice">
@@ -53,6 +55,7 @@
           <!-- Pause/resume button-->
           <div class="field">
             <button class="flow-control-button">
+              <!-- The words "pause" or "resume" don't make much sense without context, especially for users who can't see the icons. Visually-hidden text is used to make it more clear to screen reader users what is being paused or resumed -->
               <div class="pause-contents">
                 <span class="description">
                   Pause
@@ -91,8 +94,10 @@
 
       <!-- Input device status -->
       <div class="column">
+        <h2 class="visually-hidden">Input device status</h2>
+
+        <!-- Because the connection status of the devices is very important, and can change at any time, it'd be good to alert users when they change no matter where they are on the page. ARIA live regions are perfect for that. -->
         <div class="panel device-status-panel" id="input-device-status" aria-live="polite">
-          <h2 class="visually-hidden">Input device status</h2>
           <div class="connected status">Input device connected</div>
           <div class="not-connected status is-visible">Input device not connected</div>
         </div>
@@ -100,8 +105,9 @@
 
       <!-- Output device status -->
       <div class="column">
+        <h2 class="visually-hidden">Output device status</h2>
+
         <div class="panel device-status-panel" id="output-device-status" aria-live="polite">
-          <h2 class="visually-hidden">Output device status</h2>
           <div class="connected status">Output device connected</div>
           <div class="not-connected status is-visible">Output device not connected</div>
         </div>
@@ -114,26 +120,22 @@
         <div class="panel" id="live-data">
           <h2>Live sensor data</h2>
 
-          <!-- Chart.js chart -->
-          <div id="live-chart-container">
-            <canvas id="live-chart" height="100px" aria-hidden="true"></canvas>
-          </div>
+          <!-- Making charts directly accessible is usually incredibly difficult. Since this one is simple (just two axes, one data stream, no interactivity), it can be hidden (`aria-hidden="true"`) and its data made available in the following <table>. -->
+          <canvas id="live-chart" height="100px" aria-hidden="true"></canvas>
 
-          <!-- Same data in table for screen reader users -->
-          <div id="sensor-data" class="visually-hidden">
-            <table>
-              <caption>Last 50 sensor readings, sorted newest to oldest</caption>
+          <!-- Charts are just visualizations of tabular data, so presenting that data in <table>s is easy. By default, tables are really easy for screen reader users to navigate thanks to specialized key commands, so we get some free functionality by using them! -->
+          <table id="sensor-data" class="visually-hidden">
+            <caption>Last 50 sensor readings, sorted newest to oldest</caption> <!-- Captions help contextualize data, especially in a case like this where the only other textual info is the h2 above -->
 
-              <thead>
-                <tr>
-                  <th scope="col">Sensor value</th>
-                  <th scope="col">Timestamp</th>
-                </tr>
-              </thead>
+            <thead>
+              <tr>
+                <th scope="col">Sensor value</th> <!-- Identifying headers using `scope` is *essential* -->
+                <th scope="col">Timestamp</th>
+              </tr>
+            </thead>
 
-              <tbody></tbody>
-            </table>
-          </div>
+            <tbody></tbody> <!-- Rows of sensor data will be injected here via JavaScript -->
+          </table>
         </div>
       </div>
 
