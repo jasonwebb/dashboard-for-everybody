@@ -124,18 +124,20 @@
           <canvas id="live-chart" height="100px" aria-hidden="true"></canvas>
 
           <!-- Charts are just visualizations of tabular data, so presenting that data in <table>s is easy. By default, tables are really easy for screen reader users to navigate thanks to specialized key commands, so we get some free functionality by using them! -->
-          <table id="sensor-data" class="visually-hidden">
-            <caption>Last 50 sensor readings, sorted newest to oldest</caption> <!-- Captions help contextualize data, especially in a case like this where the only other textual info is the h2 above -->
+          <div id="sensor-data" class="visually-hidden">
+            <table>
+              <caption>Last 50 sensor readings, sorted newest to oldest</caption> <!-- Captions help contextualize data, especially in a case like this where the only other textual info is the h2 above -->
 
-            <thead>
-              <tr>
-                <th scope="col">Sensor value</th> <!-- Identifying headers using `scope` is *essential* -->
-                <th scope="col">Timestamp</th>
-              </tr>
-            </thead>
+              <thead>
+                <tr>
+                  <th scope="col">Sensor value</th> <!-- Identifying headers using `scope` is *essential* -->
+                  <th scope="col">Timestamp</th>
+                </tr>
+              </thead>
 
-            <tbody></tbody> <!-- Rows of sensor data will be injected here via JavaScript -->
-          </table>
+              <tbody></tbody> <!-- Rows of sensor data will be injected here via JavaScript -->
+            </table>
+          </div>
         </div>
       </div>
 
