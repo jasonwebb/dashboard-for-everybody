@@ -40,19 +40,19 @@ See the [README](https://github.com/jasonwebb/dashboard-for-everybody/blob/maste
 
 
 ## Sample devices - IoT-enabled sensor platform and motor controller
-For demo purposes during the IoT HackDay event we put together two real IoT-enabled devices to feed data to and receive data from the dashboard.
+To demo how the dashboard might be used with real hardware, we built two IoT-enabled devices during IoT Hackday - one to feed data to the dashboard and another to receive data and create physical notifications. The devices and dashboard all communicated over MQTT thanks to the Mosquitto test server. See [this diagram](https://raw.githubusercontent.com/jasonwebb/dashboard-for-everybody/master/media/system-diagram.png) for a breakdown of how the whole system was set up.
 
 ### Input device (sensors)
 
 1. Uses [Adafruit Huzzah32 board](https://learn.adafruit.com/adafruit-huzzah32-esp32-feather)
-2. Reads sensor data using Arduino sketch in `sensor-buddy/`
-3. Transmits sensor data over MQTT publish messages
+2. Has a [Sharp 2Y0A02](https://www.sparkfun.com/products/8958) infrared distance sensor connected to pin 32
+3. Reads sensor data and transmits it to dashboard using MQTT (see `./input-device` for the Arduino sketch)
 
 ### Output device (motor controller)
 
 1. Uses [Adafruit Huzzah32 board](https://learn.adafruit.com/adafruit-huzzah32-esp32-feather)
-2. Receives requests for motor movement via MQTT subscribe messages
-3. Controls motors by generating PWM signal based on MQTT messages
+2. Has a hobby DC motor connected to **digital pin 12** via a [L298-based motor controller](https://smile.amazon.com/gp/product/B06XGD5SCB/ref=ppx_yo_dt_b_asin_title_o02_s00?ie=UTF8&psc=1)
+3. Controls the motor based on MQTT messages sent from the dashboard (see `./output-device` for the Arduino sketch)
 
 ## Demo
 
