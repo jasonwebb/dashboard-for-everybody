@@ -15,6 +15,7 @@ body {
 p a,
 li a {
   text-decoration: underline;
+  color: #1267f1;
 }
 
   p a:focus,
