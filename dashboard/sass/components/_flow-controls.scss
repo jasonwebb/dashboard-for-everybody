@@ -11,6 +11,11 @@
     &:last-of-type {
       padding-left: 15px;
     }
+
+    &:not(:last-of-type) {
+      height: auto;
+      margin-bottom: 0;
+    }
   }
 
   .flow-control-button {
@@ -18,7 +23,7 @@
     background: rgba(0,0,0,.1);
     border: 0;
     border-radius: 3px;
-    
+
     display: block;
     text-align: center;
 

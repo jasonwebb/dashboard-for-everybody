@@ -7,7 +7,8 @@ const char* mqtt_server = "test.mosquitto.org";
 
 WiFiClient wifiClient;
 PubSubClient client(wifiClient);
-int value = 0;
+long lastMsg = 0;
+char msg[50];
 
 void setup() {
   // Set up the Serial connection
@@ -18,6 +19,9 @@ void setup() {
 
   // Set up the MQTT connection
   client.setServer(mqtt_server, 1883);
+
+  // Point MQTT client to internal function to process messages when they are received
+  client.setCallback(processMQTTMessages);
 }
 
 void setup_wifi() {
@@ -61,6 +65,29 @@ void reconnect() {
   }
 }
 
+void callback(char* topic, byte* payload, unsigned int length) {
+  // Output message received along with it's topic to Serial for debugging
+  Serial.print("Message arrived [");
+  Serial.print(topic);
+  Serial.print("] ");
+
+  for (int i = 0; i < length; i++) {
+    Serial.print((char)payload[i]);
+  }
+
+  Serial.println();
+
+  // TODO: validate the topic to make sure its what we expect
+
+  digitalWrite(12, HIGH);  // turn on motor
+  digitalWrite(13, HIGH);  // turn on on-board LED
+
+  delay(500);  // keep motor and LED on for a bit
+
+  digitalWrite(12, LOW);  // turn off motor
+  digitalWrite(13, LOW);  // turn off on-board LED
+}
+
 void loop() {
   // Reconnect to MQTT broker if dropped
   if (!client.connected()) {
@@ -71,14 +98,7 @@ void loop() {
   client.loop();
 
   // Send keep-alive message so dashboard knows we're still connected
-  client.publish("iothackday/dfe/sensor-device", "on");
-
-  // Take a reading from the sensor and publish an MQTT message with its value
-  int value = analogRead(32);
-  client.publish("iothackday/dfe/sensor/distance", String(value).c_str());
-
-  // Send the sensor value over Serial as well for debugging
-  Serial.println(value);
+  client.publish("iothackday/dfe/output-device", "online");
 
   // Wait for a little bit to cut down on amount of data
   delay(100);

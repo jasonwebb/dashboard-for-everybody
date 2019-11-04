@@ -1,11 +1,29 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
   <title>A Dashboard for Everybody!</title>
-  <meta name="description" content="">
+
+  <meta charset="utf-8">
+  <meta name="description" content="Small, speculative demo project that shows how real-time dashboards, like those used for IoT systems, can be enhanced using accessible design and development practices.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Facebook OG -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jasonwebb.github.io/dashboard-for-everybody/dashboard/">
+  <meta property="og:title" content="A Dashboard For Everybody - documentation">
+  <meta property="og:image" content="https://raw.githubusercontent.com/jasonwebb/dashboard-for-everybody/master/media/preview-dashboard.png">
+  <meta property="og:description" content="Small, speculative demo project that shows how real-time dashboards, like those used for IoT systems, can be enhanced using accessible design and development practices.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@jasonwebb">
+  <meta name="twitter:url" content="https://jasonwebb.github.io/dashboard-for-everybody/dashboard/">
+  <meta name="twitter:title" content="A Dashboard for Everybody - documentation">
+  <meta name="twitter:description" content="Small, speculative demo project that shows how real-time dashboards, like those used for IoT systems, can be enhanced using accessible design and development practices.">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/jasonwebb/dashboard-for-everybody/master/media/preview-dashboard.png">
 
   <link rel="stylesheet" href="lib/bulma.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
@@ -13,13 +31,15 @@
 </head>
 
 <body>
-  <header>
-    <h1 class="visually-hidden">A Dashboard for Everybody!</h1>
+  <!-- Every page should have exactly one h1, even if it has to be visually hidden. This helps screen reader users to navigate, and has SEO benefits -->
+  <h1 class="visually-hidden">A Dashboard for Everybody!</h1>
 
-    <div class="notice">
-      <div class="container">This demo is using <b>mock data</b>!</div>
-    </div>
-  </header>
+  <!-- Sometimes, though very rarely, the UI changes in ways that may be unintuitive for screen reader users (like when adding or removing triggers). Changes to the contents of this element are announced immediately to screen readers, but hidden from sighted users. -->
+  <div class="visually-hidden" id="screen-reader-announcements" aria-live="assertive"></div>
+
+  <div class="notice">
+    <div class="container">This demo is using <b>mock data</b>!</div>
+  </div>
 
   <main class="container">
     <div class="columns">
@@ -53,6 +73,7 @@
           <!-- Pause/resume button-->
           <div class="field">
             <button class="flow-control-button">
+              <!-- The words "pause" or "resume" don't make much sense without context, especially for users who can't see the icons. Visually-hidden text is used to make it more clear to screen reader users what is being paused or resumed -->
               <div class="pause-contents">
                 <span class="description">
                   Pause
@@ -60,7 +81,7 @@
                 </span>
                 <span class="icon fas fa-pause" aria-hidden="true"></span>
               </div>
-              
+
               <div class="resume-contents is-hidden">
                 <span class="description">
                   Resume
@@ -91,8 +112,10 @@
 
       <!-- Input device status -->
       <div class="column">
+        <h2 class="visually-hidden">Input device status</h2>
+
+        <!-- Because the connection status of the devices is very important, and can change at any time, it'd be good to alert users when they change no matter where they are on the page. ARIA live regions are perfect for that. -->
         <div class="panel device-status-panel" id="input-device-status" aria-live="polite">
-          <h2 class="visually-hidden">Input device status</h2>
           <div class="connected status">Input device connected</div>
           <div class="not-connected status is-visible">Input device not connected</div>
         </div>
@@ -100,8 +123,9 @@
 
       <!-- Output device status -->
       <div class="column">
+        <h2 class="visually-hidden">Output device status</h2>
+
         <div class="panel device-status-panel" id="output-device-status" aria-live="polite">
-          <h2 class="visually-hidden">Output device status</h2>
           <div class="connected status">Output device connected</div>
           <div class="not-connected status is-visible">Output device not connected</div>
         </div>
@@ -114,24 +138,22 @@
         <div class="panel" id="live-data">
           <h2>Live sensor data</h2>
 
-          <!-- Chart.js chart -->
-          <div id="live-chart-container">
-            <canvas id="live-chart" height="100px" aria-hidden="true"></canvas>
-          </div>
+          <!-- Making charts directly accessible is usually incredibly difficult. Since this one is simple (just two axes, one data stream, no interactivity), it can be hidden (`aria-hidden="true"`) and its data made available in the following <table>. -->
+          <canvas id="live-chart" height="100px" aria-hidden="true"></canvas>
 
-          <!-- Same data in table for screen reader users -->
+          <!-- Charts are just visualizations of tabular data, so presenting that data in <table>s is easy. By default, tables are really easy for screen reader users to navigate thanks to specialized key commands, so we get some free functionality by using them! -->
           <div id="sensor-data" class="visually-hidden">
             <table>
-              <caption>Last 50 sensor readings, sorted newest to oldest</caption>
+              <caption>Last 50 sensor readings, sorted newest to oldest</caption> <!-- Captions help contextualize data, especially in a case like this where the only other textual info is the h2 above -->
 
               <thead>
                 <tr>
-                  <th scope="col">Sensor value</th>
+                  <th scope="col">Sensor value</th> <!-- Identifying headers using `scope` is *essential* -->
                   <th scope="col">Timestamp</th>
                 </tr>
               </thead>
 
-              <tbody></tbody>
+              <tbody></tbody> <!-- Rows of sensor data will be injected here via JavaScript -->
             </table>
           </div>
         </div>

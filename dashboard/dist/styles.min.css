@@ -104,6 +104,9 @@ h2 {
     flex: 1 1 50%; }
     #flow-controls .field:last-of-type {
       padding-left: 15px; }
+    #flow-controls .field:not(:last-of-type) {
+      height: auto;
+      margin-bottom: 0; }
   #flow-controls .flow-control-button {
     flex: 1 0 auto;
     background: rgba(0, 0, 0, 0.1);

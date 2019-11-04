@@ -542,6 +542,11 @@ function addNewTrigger(e) {
     `;
 
     currentTriggers.push(newTriggerEl);
+
+    // Announce addition of new trigger to screen reader users
+    announce('Added ' + currentSensor + ' trigger #' + currentTriggers.length);
+
+    // Update UI
     displayTriggers();
     displayTriggerCount();
   }
@@ -564,11 +569,15 @@ function removeTrigger(trigger) {
       break;
   }
 
+  // Announce removal of this trigger to scree reader users, before the trigger is gone
+  announce('Removed ' + currentSensor + ' trigger #' + (currentTriggers.indexOf(trigger) + 1));
+
   // Remove this trigger from the array of triggers
   currentTriggers = currentTriggers.splice(currentTriggers.indexOf(trigger), 1);
 
   // TODO: Re-order the numbers
 
+  // Update UI
   displayTriggers();
   displayTriggerCount();
 }
@@ -597,7 +606,6 @@ function displayTriggers() {
   currentTriggers.forEach(function(trigger, index) {
     columns[index].innerHTML = '';
     columns[index].appendChild(trigger);
-    trigger.focus();
 
     let removeButtons = trigger.querySelectorAll('.remove-button');
     removeButtons.forEach((removeButton) => {
@@ -684,4 +692,10 @@ function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
+}
+
+// Insert a message into the assertive live region used for making announcements to screen readers
+function announce(message) {
+  let announcementEl = document.getElementById('screen-reader-announcements');
+  announcementEl.innerText = message;
 }
