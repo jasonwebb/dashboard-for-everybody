@@ -117,9 +117,14 @@
         <h2 class="visually-hidden">Input device status</h2>
 
         <!-- Because the connection status of the devices is very important, and can change at any time, it'd be good to alert users when they change no matter where they are on the page. ARIA live regions are perfect for that. -->
-        <div class="panel device-status-panel" id="input-device-status" aria-live="polite">
-          <div class="connected status">Input device connected</div>
-          <div class="not-connected status is-visible">Input device not connected</div>
+        <div class="panel device-status-panel" id="input-device-status" aria-live="assertive">
+          <div class="connected status">
+            <div class="message">Input device <span class="sr-only">is now</span> connected</div>
+          </div>
+
+          <div class="not-connected status is-visible">
+            <div class="message">Input device <span class="sr-only">is</span> not connected</div>
+          </div>
         </div>
       </div>
 
@@ -127,9 +132,14 @@
       <div class="column">
         <h2 class="visually-hidden">Output device status</h2>
 
-        <div class="panel device-status-panel" id="output-device-status" aria-live="polite">
-          <div class="connected status">Output device connected</div>
-          <div class="not-connected status is-visible">Output device not connected</div>
+        <div class="panel device-status-panel" id="output-device-status" aria-live="assertive">
+          <div class="connected status">
+            <div class="message">Output device <span class="sr-only">is now</span> connected</div>
+          </div>
+
+          <div class="not-connected status is-visible">
+            <div class="message">Output device <span class="sr-only">is</span> not connected</div>
+          </div>
         </div>
       </div>
     </div>

@@ -24,6 +24,10 @@ const inputDeviceLightSensorTopic = 'iothackday/dfe/input-device/light';
 let inputDeviceOnline = false;
 let outputDeviceOnline = false;
 
+// First-time device status flags, just for demo
+let inputDeviceFirstPing = false;
+let outputDeviceFirstPing = false;
+
 // Last
 let inputLastPing = Date.now();
 let outputLastPing = Date.now();
@@ -216,13 +220,15 @@ if(mockDataEnabled) {
   // Artificially set input and output device statuses to "online" within 5s of page load
   setTimeout(() => {
     inputDeviceOnline = true;
+    inputDeviceFirstPing = true;
     displayDeviceStatus();
-  }, getRandomInt(1000, 4000));
+  }, getRandomInt(1500, 4000));
 
   setTimeout(() => {
     outputDeviceOnline = true;
+    outputDeviceFirstPing = true;
     displayDeviceStatus();
-  }, getRandomInt(1000, 4000));
+  }, getRandomInt(1500, 4000));
 }
 
 // Generate random data for the active sensor, if the input device is online
@@ -258,8 +264,13 @@ function createMockInputData() {
 // Generate fake "keep alive" messages as though devices were online
 function createMockKeepAliveMessages() {
   if(mockDataEnabled) {
-    processMessages(inputDeviceStatusTopic, 'online');
-    processMessages(outputDeviceStatusTopic, 'online');
+    if(inputDeviceFirstPing) {
+      processMessages(inputDeviceStatusTopic, 'online');
+    }
+
+    if(outputDeviceFirstPing) {
+      processMessages(outputDeviceStatusTopic, 'online');
+    }
   }
 }
 
